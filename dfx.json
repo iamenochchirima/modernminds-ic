@@ -1,0 +1,30 @@
+{
+  "canisters": {
+    "modernminds_backend": {
+      "candid": "src/modernminds_backend/modernminds_backend.did",
+      "package": "modernminds_backend",
+      "type": "rust"
+    },
+    "modernminds_frontend": {
+      "dependencies": [
+        "modernminds_backend"
+      ],
+      "frontend": {
+        "entrypoint": "src/modernminds_frontend/src/index.html"
+      },
+      "source": [
+        "src/modernminds_frontend/assets",
+        "dist/modernminds_frontend/"
+      ],
+      "type": "assets"
+    }
+  },
+  "defaults": {
+    "build": {
+      "args": "",
+      "packtool": ""
+    }
+  },
+  "output_env_file": ".env",
+  "version": 1
+}
