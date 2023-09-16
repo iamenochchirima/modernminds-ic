@@ -1,8 +1,15 @@
-import React, { useState } from "react";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { Route, Routes } from "react-router-dom";
+import Layout from "./components/Layout";
+import Page404 from "./pages/Page404";
+import Home from "./pages/Home";
 
-const App = () => {
-  return <div className="bg-gray-900 text-gray-300">App</div>;
-};
-
-export default App;
+export default function App() {
+  return (
+    <Routes>
+      <Route element={<Layout />}>
+        <Route path="/" element={<Home />} />
+      </Route>
+      <Route path="*" element={<Page404 />} />
+    </Routes>
+  );
+}
