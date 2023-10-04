@@ -1,21 +1,21 @@
 {
   "canisters": {
     "modernminds_backend": {
-      "candid": "src/modernminds_backend/modernminds_backend.did",
+      "candid": "modernminds_backend/modernminds_backend.did",
       "package": "modernminds_backend",
-      "type": "rust"
+      "type": "rust",
+      "declarations": {
+        "node_compatibility": true
+      }
     },
     "modernminds_frontend": {
       "dependencies": [
         "modernminds_backend"
       ],
       "frontend": {
-        "entrypoint": "src/modernminds_frontend/src/index.html"
+        "entrypoint": "out/index.html"
       },
-      "source": [
-        "src/modernminds_frontend/assets",
-        "dist/modernminds_frontend/"
-      ],
+      "source": ["out"],
       "type": "assets"
     }
   },

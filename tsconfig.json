@@ -1,14 +1,28 @@
 {
-    "compilerOptions": {
-      "target": "es2018",
-      "module": "esnext",        /* Specify ECMAScript target version: 'ES3' (default), 'ES5', 'ES2015', 'ES2016', 'ES2017', 'ES2018', 'ES2019' or 'ESNEXT'. */
-      "lib": ["ES2018", "DOM"],  /* Specify library files to be included in the compilation. */
-      "allowJs": true,           /* Allow javascript files to be compiled. */
-      "jsx": "react-jsx",
-      "moduleResolution":"node",
-      "noImplicitAny": false,
-      "esModuleInterop": true,
-                  /* Specify JSX code generation: 'preserve', 'react-native', or 'react'. */
-    },
-    "include": ["src/**/*.tsx", "src/**/*.ts"],
+  "compilerOptions": {
+    "lib": [
+      "dom",
+      "dom.iterable",
+      "esnext"
+    ],
+    "allowJs": true,
+    "skipLibCheck": true,
+    "strict": false,
+    "noEmit": true,
+    "incremental": true,
+    "esModuleInterop": true,
+    "module": "esnext",
+    "moduleResolution": "node",
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "jsx": "preserve"
+  },
+  "include": [
+    "next-env.d.ts",
+    "**/*.ts",
+    "**/*.tsx"
+  ],
+  "exclude": [
+    "node_modules"
+  ]
 }

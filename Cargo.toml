@@ -1,4 +1,4 @@
 [workspace]
 members = [
-    "src/modernminds_backend",
+    "modernminds_backend",
 ]
