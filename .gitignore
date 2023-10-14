@@ -12,6 +12,8 @@
 
 target/
 
+src/declarations/
+
 # frontend code
 node_modules/
 out/
