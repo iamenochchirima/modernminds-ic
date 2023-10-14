@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
-import { useConfirmResetMutation } from "../../../ui/redux/api/generalApi";
-import { setOpenLoginViewState } from "../../../ui/redux/slices/authSlice";
+import { useConfirmResetMutation } from "../../../src/redux/api/generalApi";
+import { setOpenLoginViewState } from "../../../src/redux/slices/authSlice";
 import { useDispatch } from "react-redux";
 import { Oval, ThreeDots } from "react-loader-spinner";
 import Image from "next/image";

@@ -1,6 +1,6 @@
 import {useState } from "react";
 import { useRouter } from "next/router";
-import { useNewsletterUnsubscribeMutation } from "../../ui/redux/api/generalApi";
+import { useNewsletterUnsubscribeMutation } from "../../src/redux/api/generalApi";
 import Image from "next/image";
 import { toast } from "react-toastify";
 

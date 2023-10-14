@@ -1,9 +1,9 @@
 import { useState, useEffect } from "react";
-import Layout from "../ui/components/Layout";
-import Articles from "../ui/components/SpecialArticles";
+import Layout from "../src/components/Layout";
+import Articles from "../src/components/SpecialArticles";
 import { GrClose } from "react-icons/gr";
 import { useRouter } from "next/router";
-import { useMainNewsletterMutation } from "../ui/redux/api/authApi";
+import { useMainNewsletterMutation } from "../src/redux/api/authApi";
 import Link from "next/link";
 import { ThreeDots } from "react-loader-spinner";
 import { AiOutlineWarning } from "react-icons/ai";

@@ -1,6 +1,6 @@
-import LatestArticles from "../ui/components/LatestArticles";
-import Layout from "../ui/components/Layout";
-import SpecialArticles from "../ui/components/SpecialArticles";
+import LatestArticles from "../src/components/LatestArticles";
+import Layout from "../src/components/Layout";
+import SpecialArticles from "../src/components/SpecialArticles";
 
 export default function Home() {
   return (

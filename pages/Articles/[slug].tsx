@@ -1,10 +1,10 @@
 import { useEffect } from "react";
-import Layout from "../../ui/components/Layout";
+import Layout from "../../src/components/Layout";
 import { useRouter } from "next/router";
 import {
   useLazyGetFullArticleQuery,
   useGetCategoriesQuery,
-} from "../../ui/redux/api/generalApi";
+} from "../../src/redux/api/generalApi";
 import Link from "next/link";
 import Image from "next/image";
 

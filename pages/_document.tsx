@@ -1,6 +1,6 @@
 import { Html, Head, Main, NextScript } from "next/document";
 
-import { GA_TRACKING_ID } from "../ui/lib/gtag";
+import { GA_TRACKING_ID } from "../src/lib/gtag";
 
 export default function Document() {
   return (

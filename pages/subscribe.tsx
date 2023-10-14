@@ -1,5 +1,5 @@
 import React from "react";
-import Layout from "../ui/components/Layout";
+import Layout from "../src/components/Layout";
 
 const Subscribe = () => {
   return (

@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { useRouter } from "next/router";
-import { useVerifyEmailMutation } from "../../../ui/redux/api/generalApi";
-import { setOpenLoginViewState } from "../../../ui/redux/slices/authSlice";
+import { useVerifyEmailMutation } from "../../../src/redux/api/generalApi";
+import { setOpenLoginViewState } from "../../../src/redux/slices/authSlice";
 import { Oval, ThreeDots } from "react-loader-spinner";
 import { useDispatch } from "react-redux";
 

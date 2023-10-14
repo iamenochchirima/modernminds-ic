@@ -1,8 +1,8 @@
 import { useState, useEffect } from "react";
-import { useLazySearchQuery } from "../ui/redux/api/generalApi";
+import { useLazySearchQuery } from "../src/redux/api/generalApi";
 import Link from "next/link";
-import Layout from "../ui/components/Layout";
-import { useGetCategoriesQuery } from "../ui/redux/api/generalApi";
+import Layout from "../src/components/Layout";
+import { useGetCategoriesQuery } from "../src/redux/api/generalApi";
 import { AiOutlineSearch } from "react-icons/ai";
 import Image from "next/image";
 

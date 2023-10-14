@@ -2,10 +2,10 @@ import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { useRouter } from "next/router";
 import { Oval, ThreeDots } from "react-loader-spinner";
-import { useVerifyNewsletterEmailMutation } from "../../ui/redux/api/generalApi";
+import { useVerifyNewsletterEmailMutation } from "../../src/redux/api/generalApi";
 import { GrClose } from "react-icons/gr";
-import Layout from "../../ui/components/Layout";
-import Articles from "../../ui/components/SpecialArticles";
+import Layout from "../../src/components/Layout";
+import Articles from "../../src/components/SpecialArticles";
 import Link from "next/link";
 
 const Verify = () => {

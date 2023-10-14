@@ -1,5 +1,5 @@
 import cookie from "cookie";
-import { API_URL } from "../../../ui/config/index";
+import { API_URL } from "../../../src/config/index";
 import axios from "axios";
 import jwtDecode from "jwt-decode";
 

@@ -1,4 +1,4 @@
-import Layout from "../ui/components/Layout";
+import Layout from "../src/components/Layout";
 import Image from "next/image";
 import React from "react";
 
