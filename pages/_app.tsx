@@ -10,6 +10,7 @@ import * as gtag from "../src/lib/gtag"
 import AppContext from "../src/context/AppContext"
 
 export default function App({ Component, ...rest }) {
+
   const { store, props } = wrapper.useWrappedStore(rest)
   const { pageProps } = props
   const router = useRouter()

@@ -1,14 +1,14 @@
 import { useState, useEffect } from "react";
-import Layout from "@/components/Layout";
+import Layout from "../src/components/Layout";
 import { GrClose } from "react-icons/gr";
-import { useLoadUserQuery } from "@/redux/api/authApi";
-import Articles from "@/components/SpecialArticles";
+import { useLoadUserQuery } from "../src/redux/api/authApi";
+import Articles from "../src/components/SpecialArticles";
 import {
   useUpdateUserMutation,
   useChangeEmailMutation,
   useDeleteAccountMutation,
   useLogoutMutation,
-} from "@/redux/api/authApi";
+} from "../src/redux/api/authApi";
 import { useRouter } from "next/router";
 import { Oval, ThreeDots } from "react-loader-spinner";
 import Link from "next/link";
@@ -63,11 +63,11 @@ const Userprofile = () => {
     window.location.reload();
   };
 
-  useEffect(() => {
-    if (isError) {
-      router.push("/");
-    }
-  }, [isError]);
+  // useEffect(() => {
+  //   if (isError) {
+  //     router.push("/");
+  //   }
+  // }, [isError]);
 
   const [
     emailChange,

@@ -1,8 +1,9 @@
 import React, { FC, createContext, useContext, useState } from "react"
-import { Actor, HttpAgent } from "@dfinity/agent"
+import { Actor, HttpAgent, Identity } from "@dfinity/agent"
 
 import { AuthClient } from "@dfinity/auth-client"
 import { idlFactory } from "../declarations/modernminds_backend"
+import { getAuthClient, nfidLogin } from "./utils/auth"
 
 const host = "https://icp0.io"
 // const host = "http://localhost:4943";
@@ -17,7 +18,7 @@ const hours = BigInt(24)
 const nanoseconds = BigInt(3600000000000)
 
 type Context = {
-  identity: any
+  session: Session | null;
   backendActor: any
   isAuthenticated: boolean
   isExploreOpen: boolean
@@ -25,19 +26,24 @@ type Context = {
   registerView: boolean
   isLogedIn: boolean
   resetPasswordRequest: boolean
-  setIdentity: (_value: any) => void
   setIsAuthenticated: (_value: boolean) => void
   setLoginView: (_value: boolean) => void
   setRegisterView: (_value: boolean) => void
   setIsLogedIn: (_value: boolean) => void
+  setExploreOpen: (_value: boolean) => void
   setResetPasswordRequest: (_value: boolean) => void
   login: () => void
   logout: () => void
   checkAuth: () => void
 }
 
+interface Session {
+  identity: Identity | null;
+  address: string | null;
+}
+
 const initialContext: Context = {
-  identity: null,
+  session: null,
   backendActor: null,
   isAuthenticated: false,
   isExploreOpen: false,
@@ -46,8 +52,7 @@ const initialContext: Context = {
   registerView: false,
   isLogedIn: false,
   resetPasswordRequest: false,
-
-  setIdentity: (any): void => {},
+  setExploreOpen: (any): void => {},
   setIsAuthenticated: (any): void => {},
   setLoginView: (any): void => {},
   setRegisterView: (any): void => {},
@@ -66,36 +71,59 @@ export const appContext = () => {
 const AppContext: FC<LayoutProps> = ({ children }) => {
   const [identity, setIdentity] = useState(null)
   const [isAuthenticated, setIsAuthenticated] = useState(false)
-  const [isExploreOpen, setIsExploreOpen] = useState(false)
+  const [isExploreOpen, setExploreOpen] = useState(false)
   const [loginView, setLoginView] = useState(false)
   const [registerView, setRegisterView] = useState(false)
   const [isLogedIn, setIsLogedIn] = useState(false)
   const [resetPasswordRequest, setResetPasswordRequest] = useState(false)
+  const [session, setSession] = React.useState<Session | null>(null);
+
+  // const login = async () => {
+  //   const authClient = await AuthClient.create({
+  //     idleOptions: (typeof indexedDB !== 'undefined') ? {
+  //       idleTimeout: 1000 * 60 * 30,
+  //       disableDefaultIdleCallback: true
+  //     } : null
+  //   })
+  //   await authClient.login({
+  //     identityProvider: "https://identity.ic0.app/#authorize",
+  //     // identityProvider: `http://localhost:4943?canisterId=${canisterId}`,
+  //     onSuccess: () => {
+  //       checkAuth()
+  //     },
+  //     maxTimeToLive: days * hours * nanoseconds
+  //   })
+  // }
+
+  const assignSession = (authClient: AuthClient) => {
+    const identity = authClient.getIdentity();
+    const address = identity.getPrincipal().toString();
+
+    setSession({
+      identity,
+      address,
+    });
+  };
 
   const login = async () => {
-    const authClient = await AuthClient.create({
-      idleOptions: (typeof indexedDB !== 'undefined') ? {
-        idleTimeout: 1000 * 60 * 30,
-        disableDefaultIdleCallback: true
-      } : null
-    })
-    await authClient.login({
-      identityProvider: "https://identity.ic0.app/#authorize",
-      // identityProvider: `http://localhost:4943?canisterId=${canisterId}`,
-      onSuccess: () => {
-        checkAuth()
-      },
-      maxTimeToLive: days * hours * nanoseconds
-    })
-  }
+    const authClient = await getAuthClient();
+    const isAuthenticated = await authClient.isAuthenticated();
+    if (isAuthenticated) return assignSession(authClient);
+
+    await nfidLogin(authClient!);
+
+    return checkAuth();
+  };
 
   const checkAuth = async () => {
+    try {
     const authClient = await AuthClient.create()
     if (await authClient.isAuthenticated()) {
       setIsAuthenticated(true)
-      const identity = authClient.getIdentity()
-      setIdentity(identity)
-      setIsLogedIn(true)
+      assignSession(await getAuthClient());
+    }
+    } catch (error) {
+      
     }
   }
 
@@ -121,15 +149,15 @@ const AppContext: FC<LayoutProps> = ({ children }) => {
   return (
     <MagContext.Provider
       value={{
-        identity,
+        session,
         backendActor,
         isAuthenticated,
         isExploreOpen,
+        setExploreOpen,
         loginView,
         registerView,
         isLogedIn,
         resetPasswordRequest,
-        setIdentity,
         setIsAuthenticated,
         setLoginView,
         setRegisterView,

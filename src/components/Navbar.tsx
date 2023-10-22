@@ -1,148 +1,127 @@
-import { useState, useEffect } from "react";
-import {
-  useLoadUserQuery,
-  useLazyLoadUserQuery,
-  useLogoutMutation,
-} from "../redux/api/authApi";
-import { useSignUpNewsletterMutation } from "../redux/api/generalApi";
-import {
-  setLogoutState,
-  setAuthState,
-  setOpenLoginViewState,
-  setCloseLoginViewState,
-  setCloseRegisterViewState,
-  setClosePasswordReset,
-} from "../redux/slices/authSlice";
-import { setExploreOpen } from "../redux/slices/appSlice";
-import { useSelector } from "react-redux";
-import Link from "next/link";
-import { useDispatch } from "react-redux";
-import Login from "./Login";
-import Register from "./Register";
-import { GrClose } from "react-icons/gr";
-import PasswordReset from "./PasswordReset";
-import { Oval, ThreeDots } from "react-loader-spinner";
-import { AiOutlineDown, AiOutlineClose, AiOutlineSearch } from "react-icons/ai";
-import { GrMenu } from "react-icons/gr";
-import { BsPerson } from "react-icons/bs";
-import ExploreModal from "./ExploreModal";
-import Image from "next/image";
+import { useState, useEffect } from "react"
+import Link from "next/link"
+import { useDispatch } from "react-redux"
+import Login from "./Login"
+import Register from "./Register"
+import { GrClose } from "react-icons/gr"
+import PasswordReset from "./PasswordReset"
+import { ThreeDots } from "react-loader-spinner"
+import { AiOutlineDown, AiOutlineClose, AiOutlineSearch } from "react-icons/ai"
+import { GrMenu } from "react-icons/gr"
+import { BsPerson } from "react-icons/bs"
+import ExploreModal from "./ExploreModal"
+import Image from "next/image"
+import { appContext } from "../context/AppContext"
 
 const Navbar = () => {
-  const dispatch = useDispatch();
-  const [userInfo, setUserInfo] = useState(null);
-  const [letterEmail, setLetterEmail] = useState("");
-  const [showNewsletterForm, setShowForm] = useState(false);
+// TODO: CHECK IF THE USER IS IN THE USERS MAPS
+// IF NOT, SHOW A MODAL ASKING THEM IF THEY WOULD LIKE TO CONTINUE AS ANONYMOUS USER OR CREATE A PROFILE
 
-  const [menuOpen, setMenuOpen] = useState(false);
+  const dispatch = useDispatch()
+  const [userInfo, setUserInfo] = useState(null)
+  const [letterEmail, setLetterEmail] = useState("")
+  const [showNewsletterForm, setShowForm] = useState(false)
+  const [menuOpen, setMenuOpen] = useState(false)
+  const [isSticky, setIsSticky] = useState(false)
 
-  const [isSticky, setIsSticky] = useState(false);
+const [letterLoading, setLetterLoading] = useState(false)
+const [letterSuccess, setLetterSuccess] = useState(false)
+const [signupError, setSignupError] = useState(null)
+const [signupData, setSignupData] = useState(null)
 
-  const [logout, { isSuccess: logoutSuccess }] = useLogoutMutation();
-
-  const [
-    signupLetter,
-    {
-      data: signupData,
-      isSuccess: letterSuccess,
-      isLoading: letterLoading,
-      error: signupError,
-    },
-  ] = useSignUpNewsletterMutation();
-  const { data, isSuccess, error } = useLoadUserQuery();
-  const [fetchUser, { data: lazyData, isSuccess: success, error: lazyError }] =
-    useLazyLoadUserQuery();
-
-  useEffect(() => {
-    const handleScroll = () => {
-      setIsSticky(window.pageYOffset > 0);
-    };
-
-    window.addEventListener("scroll", handleScroll);
-
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-    };
-  }, []);
-
-  const handleShowForm = () => {
-    setShowForm(true);
-  };
-
-  const handleCloseForm = () => {
-    setShowForm(false);
-  };
-
-  const letterBody = {
-    email: letterEmail,
-  };
-  const handleSubmitNewsletter = async (event) => {
-    event.preventDefault();
-    if (letterBody) {
-      try {
-        await signupLetter(letterBody)
-          .unwrap()
-          .then((payload) => {
-            console.log("Success ", payload);
-          });
-      } catch (err) {
-        console.error("Failed to sign up for newsletter: ", err);
-        console.log(signupError, "There have been an error");
-      }
-    }
-  };
 
   const {
+    login,
+    logout,
     isAuthenticated,
     loginView,
     registerView,
     isLogedIn,
+    session,
     resetPasswordRequest,
-  } = useSelector((state) => state.auth);
+    isExploreOpen,
+    setExploreOpen,
+    checkAuth,
+  } = appContext()
 
-  const { isExploreOpen } = useSelector((state) => state.app);
+ console.log("Session ", session)
+
+  useEffect(() => {
+    checkAuth()
+  }, [])
+
+  // const [
+  //   signupLetter,
+  //   {
+  //     data: signupData,
+  //     isSuccess: letterSuccess,
+  //     isLoading: letterLoading,
+  //     error: signupError,
+  //   },
+  // ] = useSignUpNewsletterMutation();
+  // const { data, isSuccess, error } = useLoadUserQuery();
+  // const [fetchUser, { data: lazyData, isSuccess: success, error: lazyError }] =
+  //   useLazyLoadUserQuery();
+
+
+  const letterBody = {
+    email: letterEmail
+  }
+  const handleSubmitNewsletter = async event => {
+    event.preventDefault()
+    if (letterBody) {
+      // try {
+      //   await signupLetter(letterBody)
+      //     .unwrap()
+      //     .then((payload) => {
+      //       console.log("Success ", payload);
+      //     });
+      // } catch (err) {
+      //   console.error("Failed to sign up for newsletter: ", err);
+      //   console.log(signupError, "There have been an error");
+      // }
+    }
+  }
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsSticky(window.pageYOffset > 0)
+    }
+
+    window.addEventListener("scroll", handleScroll)
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll)
+    }
+  }, [])
+
+  const handleShowForm = () => {
+    setShowForm(true)
+  }
+
+  const handleCloseForm = () => {
+    setShowForm(false)
+  }
+
 
   const handleExploreOpen = () => {
-    setMenuOpen(false);
-    dispatch(setExploreOpen());
-  };
+    setMenuOpen(false)
+    setExploreOpen(true)
+  }
 
-  const handleLoginClick = (e) => {
-    e.preventDefault;
-    dispatch(setOpenLoginViewState());
-  };
+  const fetchUser = async () => {
+    console.log("Fetching user")
+  }
 
   const handleMobileNewsLetter = () => {
-    setMenuOpen(false);
-    handleShowForm();
-  };
-
-  useEffect(() => {
-    if (logoutSuccess) {
-      window.location.reload();
-    }
-  }, [logoutSuccess]);
-
-  useEffect(() => {
-    if (isLogedIn) {
-      fetchUser();
-    }
-    if (success) {
-      setUserInfo(lazyData);
-      dispatch(setAuthState());
-    }
-    if (isSuccess) {
-      setUserInfo(data);
-      setLetterEmail(data.user.email);
-      dispatch(setAuthState());
-    }
-  }, [isLogedIn, success, lazyData, data, isSuccess]);
+    setMenuOpen(false)
+    handleShowForm()
+  }
 
   const handleLogout = () => {
-    logout();
-    setUserInfo(null);
-    dispatch(setLogoutState());
-  };
+    logout()
+    setUserInfo(null)
+  }
 
   return (
     <div className="flex justify-center items-start ">
@@ -163,7 +142,7 @@ const Navbar = () => {
               <Image
                 src={"/logo.png"}
                 style={{
-                  objectFit: "cover",
+                  objectFit: "cover"
                 }}
                 fill
                 sizes="(max-width: 768px) 100vw,
@@ -181,39 +160,39 @@ const Navbar = () => {
         <ul className="flex  space-x-1 ss:space-x-2 font-product items-center">
           {!isAuthenticated && (
             <li>
-              <button onClick={handleLoginClick}>Signin</button>
+              <button onClick={login}>Signin</button>
             </li>
           )}
           {isAuthenticated && (
             <li className="relative group pr-2">
-            <div className="group-hover:block hidden">
-              <div className="absolute z-20 left-1/2 transform -translate-x-1/2 top-full w-40 py-2 bg-white rounded-md shadow-lg opacity-0 transition-opacity duration-300 group-hover:opacity-100">
-                <Link
-                  href="/userprofile"
-                  className="block px-4 py-2 hover:bg-gray-100"
-                >
-                  Account settings
-                </Link>
-                <Link
-                  href="manage-subscriptions"
-                  className="block px-4 py-2 hover:bg-gray-100"
-                >
-                  Subscriptions
-                </Link>
-                <button
-                  onClick={handleLogout}
-                  className="block px-4 py-2 hover:bg-gray-100"
-                >
-                  Sign out
-                </button>
+              <div className="group-hover:block hidden">
+                <div className="absolute z-20 left-1/2 transform -translate-x-1/2 top-full w-40 py-2 bg-white rounded-md shadow-lg opacity-0 transition-opacity duration-300 group-hover:opacity-100">
+                  <Link
+                    href="/userprofile"
+                    className="block px-4 py-2 hover:bg-gray-100"
+                  >
+                    Account settings
+                  </Link>
+                  <Link
+                    href="manage-subscriptions"
+                    className="block px-4 py-2 hover:bg-gray-100"
+                  >
+                    Subscriptions
+                  </Link>
+                  <button
+                    onClick={handleLogout}
+                    className="block px-4 py-2 hover:bg-gray-100"
+                  >
+                    Sign out
+                  </button>
+                </div>
               </div>
-            </div>
-            <button className="flex gap-1 items-center group-hover:text-gray-800">
-              <BsPerson />
-              {userInfo?.user.first_name}
-              <AiOutlineDown className="text-sm" />
-            </button>
-          </li>
+              <button className="flex gap-1 items-center group-hover:text-gray-800">
+                <BsPerson />
+                {userInfo?.user.first_name}
+                <AiOutlineDown className="text-sm" />
+              </button>
+            </li>
           )}
           {userInfo?.user?.is_staff && (
             <li className="hidden sm:block">
@@ -264,7 +243,7 @@ const Navbar = () => {
                         id="email"
                         name="email"
                         value={letterEmail}
-                        onChange={(event) => setLetterEmail(event.target.value)}
+                        onChange={event => setLetterEmail(event.target.value)}
                         placeholder="Enter you email address"
                         required
                         className="border border-gray-400 py-2 px-4 rounded w-full mb-4"
@@ -276,8 +255,7 @@ const Navbar = () => {
                           radius="9"
                           color="black"
                           ariaLabel="three-dots-loading"
-                          wrapperStyle={{}}
-                          wrapperClassName=""
+                          wrapperStyle={{}}                 
                           visible={true}
                         />
                       ) : (
@@ -339,7 +317,7 @@ const Navbar = () => {
           </li>
           <li>
             <button
-              onClick={() => dispatch(setExploreOpen())}
+              onClick={() => handleExploreOpen()}
               className="text-white hover:bg-gray-800 bg-black px-2 py-1 rounded-md hidden sm:block"
             >
               Explore
@@ -398,7 +376,7 @@ const Navbar = () => {
               <div className="flex justify-end">
                 <button
                   className="justify-end"
-                  onClick={() => dispatch(setCloseLoginViewState())}
+                  // onClick={() => setCloseLoginViewState }
                 >
                   <GrClose className="text-2xl mt-2" />
                 </button>
@@ -415,7 +393,7 @@ const Navbar = () => {
               <div className="flex justify-end">
                 <button
                   className="justify-end"
-                  onClick={() => dispatch(setCloseRegisterViewState())}
+                  // onClick={() => dispatch(setCloseRegisterViewState())}
                 >
                   <GrClose className="text-2xl mt-2" />
                 </button>
@@ -432,7 +410,7 @@ const Navbar = () => {
               <div className="flex justify-end">
                 <button
                   className="justify-end"
-                  onClick={() => dispatch(setClosePasswordReset())}
+                  // onClick={() => dispatch(setClosePasswordReset())}
                 >
                   <GrClose className="text-2xl mt-2" />
                 </button>
@@ -443,7 +421,7 @@ const Navbar = () => {
         </div>
       )}
     </div>
-  );
-};
+  )
+}
 
-export default Navbar;
+export default Navbar
