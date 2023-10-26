@@ -1,4 +1,0 @@
-[workspace]
-members = [
-    "modernminds_backend",
-]

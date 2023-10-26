@@ -1,12 +1,8 @@
 {
   "canisters": {
     "modernminds_backend": {
-      "candid": "modernminds_backend/modernminds_backend.did",
-      "package": "modernminds_backend",
-      "type": "rust",
-      "declarations": {
-        "node_compatibility": true
-      }
+      "main": "mm_backend/main/main.mo",
+      "type": "motoko"
     },
     "internet_identity": {
       "type": "custom",
@@ -20,9 +16,7 @@
       }
     },
     "modernminds_frontend": {
-      "dependencies": [
-        "modernminds_backend"
-      ],
+      "dependencies": ["modernminds_backend"],
       "frontend": {
         "entrypoint": "out/index.html"
       },
@@ -32,8 +26,7 @@
   },
   "defaults": {
     "build": {
-      "args": "",
-      "packtool": ""
+      "packtool": "mops sources"
     }
   },
   "output_env_file": ".env",

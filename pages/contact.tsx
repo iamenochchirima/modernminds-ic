@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { toast } from "react-toastify";
 import { ThreeDots } from "react-loader-spinner";
-import Layout from "@/components/Layout";
+import Layout from "../src/components/Layout";
 
 const ContactForm = () => {
   const [name, setName] = useState("");

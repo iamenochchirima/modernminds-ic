@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react"
+import { useState, useEffect, use } from "react"
 import Link from "next/link"
 import { useDispatch } from "react-redux"
 import Login from "./Login"
@@ -23,6 +23,7 @@ const Navbar = () => {
   const [showNewsletterForm, setShowForm] = useState(false)
   const [menuOpen, setMenuOpen] = useState(false)
   const [isSticky, setIsSticky] = useState(false)
+  const [newUser, setNewUser] = useState(false)
 
 const [letterLoading, setLetterLoading] = useState(false)
 const [letterSuccess, setLetterSuccess] = useState(false)
@@ -42,13 +43,28 @@ const [signupData, setSignupData] = useState(null)
     isExploreOpen,
     setExploreOpen,
     checkAuth,
+    backendActor,
   } = appContext()
 
- console.log("Session ", session)
+useEffect(() => {
+  if (session) {
+    fetchUser()
+  }
+}, [session])
 
   useEffect(() => {
     checkAuth()
   }, [])
+
+  const fetchUser = async () => {
+    const res: Response = await backendActor.getUser(session.identity.getPrincipal())
+    if (res.ok) {
+      setUserInfo(res.ok)
+    } else {
+      setNewUser(true)
+    }
+  }
+
 
   // const [
   //   signupLetter,
@@ -62,6 +78,7 @@ const [signupData, setSignupData] = useState(null)
   // const { data, isSuccess, error } = useLoadUserQuery();
   // const [fetchUser, { data: lazyData, isSuccess: success, error: lazyError }] =
   //   useLazyLoadUserQuery();
+
 
 
   const letterBody = {
@@ -109,9 +126,6 @@ const [signupData, setSignupData] = useState(null)
     setExploreOpen(true)
   }
 
-  const fetchUser = async () => {
-    console.log("Fetching user")
-  }
 
   const handleMobileNewsLetter = () => {
     setMenuOpen(false)
