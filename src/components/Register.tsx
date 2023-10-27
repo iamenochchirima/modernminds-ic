@@ -1,106 +1,53 @@
-import { useEffect, useState } from "react";
-import {
-  useRegisterMutation,
-  useGetCountriesQuery,
-} from "../redux/api/generalApi";
-import { ThreeDots } from "react-loader-spinner";
-import {
-  setCloseRegisterViewState,
-  setOpenLoginViewState,
-} from "../redux/slices/authSlice";
-import { useDispatch } from "react-redux";
-import Image from "next/image";
-import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
-import Link from "next/link";
+import { useState } from "react"
+import { ThreeDots } from "react-loader-spinner"
+import Image from "next/image"
+import Link from "next/link"
+import { z } from "zod"
+import { useForm } from "react-hook-form"
+import { zodResolver } from "@hookform/resolvers/zod"
+import { countryListAllIsoData } from "../config"
 
-const Register = () => {
-  const [countries, setCounties] = useState(null);
-  const [open, setOpen] = useState(false);
-  const [reOpen, setReOpen] = useState(false);
-  const dispatch = useDispatch();
-  const [register, { isLoading, isSuccess, isError: isRegisterError, error }] =
-    useRegisterMutation();
-  const { data, isSuccess: countriesSuccess, isError } = useGetCountriesQuery();
+type FormData = {
+  first_name: string
+  last_name: string
+  email: string
+  country: string
+  gender: string
+}
 
-  const [focused, setFocused] = useState({
-    first_name: false,
-    last_name: false,
-    email: false,
-    country: false,
-    gender: false,
-    password: false,
-    re_password: false,
-  });
+const Register = ({ setSetup }) => {
+  const [isLoading, setIsLoading] = useState(false)
+  const [isSuccess, setIsSuccess] = useState(false)
 
-  const handleFocused = (field) => {
-    setFocused((prev) => ({ ...prev, [field]: true }));
-  };
-
-  useEffect(() => {
-    if (countriesSuccess) {
-      setCounties(data);
-    }
-  }, [data, countriesSuccess]);
-
-  const initialFormData = Object.freeze({
-    first_name: "",
-    last_name: "",
-    email: "",
-    country: "",
-    gender: "",
-    password: "",
-    re_password: "",
-  });
-
-  const [formData, setFormData] = useState(initialFormData);
+  const schema = z.object({
+    first_name: z
+      .string()
+      .min(2, { message: "First name must be at least 2 characters long" })
+      .max(50, { message: "First name must be less than 50 characters long" }),
+    last_name: z
+      .string()
+      .min(2, { message: "Last name must be at least 2 characters long" })
+      .max(50, { message: "Last name must be less than 50 characters long" }),
+    email: z
+      .string()
+      .email({ message: "Please provide a valid email address" }),
+    country: z
+      .string()
+      .min(3, { message: "Country name must be at least 3 characters long" })
+      .max(40, {
+        message: "Country name must be less than 40 characters long"
+      })
+  })
 
   const {
-    first_name,
-    last_name,
-    email,
-    country,
-    gender,
-    password,
-    re_password,
-  } = formData;
+    register,
+    handleSubmit,
+    formState: { errors }
+  } = useForm<FormData>({ resolver: zodResolver(schema) })
 
-  const onChange = (e) =>
-    setFormData({ ...formData, [e.target.name]: e.target.value.trim() });
-
-  const body = {
-    first_name: formData.first_name,
-    last_name: formData.last_name,
-    email: formData.email,
-    country: formData.country,
-    gender: formData.gender,
-    password: formData.password,
-    re_password: formData.re_password,
-  };
-
-  const handleSigninClick = () => {
-    dispatch(setCloseRegisterViewState());
-    dispatch(setOpenLoginViewState());
-  };
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    if (body) {
-      try {
-        if (body.password !== body.re_password) {
-          alert("Password mismatch");
-        }
-
-        await register(body)
-          .unwrap()
-          .then((payload) => {
-            console.log("fulfilled", payload);
-            setFormData(initialFormData);
-          });
-      } catch (err) {
-        console.error("Failed to register: ", err);
-      }
-    }
-  };
+  const saveProfile = async (data: FormData) => {
+    console.log(data)
+  }
 
   if (isSuccess) {
     return (
@@ -120,7 +67,7 @@ const Register = () => {
           </p>
         </div>
       </>
-    );
+    )
   } else {
     return (
       <>
@@ -140,7 +87,7 @@ const Register = () => {
           className="mt-8 space-y-6"
           action="#"
           method="POST"
-          onSubmit={handleSubmit}
+          onSubmit={handleSubmit(saveProfile)}
         >
           <input type="hidden" name="remember" value="true" />
           <div className="-space-y-px rounded-md shadow-sm">
@@ -153,15 +100,15 @@ const Register = () => {
                   name="first_name"
                   type="text"
                   autoComplete="first_name"
-                  value={first_name}
-                  onChange={onChange}
-                  focused={focused.first_name.toString()}
-                  onBlur={() => handleFocused("first_name")}
-                  required
+                  {...register("first_name")}
                   className="relative block w-full appearance-none  rounded border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
                   placeholder="First name"
                 />
-                <span className="error-message ">First name is required</span>
+                {errors.first_name && (
+                  <span className="text-red-600">
+                    {errors.first_name.message}
+                  </span>
+                )}
               </div>
               <div className="mb-3">
                 <label htmlFor="first_name" className="sr-only">
@@ -171,15 +118,15 @@ const Register = () => {
                   name="last_name"
                   type="text"
                   autoComplete="last name"
-                  value={last_name}
-                  onChange={onChange}
-                  focused={focused.last_name.toString()}
-                  onBlur={() => handleFocused("last_name")}
-                  required
+                  {...register("last_name")}
                   className="relative block w-full appearance-none  rounded border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
                   placeholder="Last name"
                 />
-                <span className="error-message ">Last name is required</span>
+                {errors.last_name && (
+                  <span className="text-red-600">
+                    {errors.last_name.message}
+                  </span>
+                )}
               </div>
             </div>
             <div className="">
@@ -189,17 +136,14 @@ const Register = () => {
               <input
                 id="email-address"
                 name="email"
-                type="email"
-                value={email}
-                onChange={onChange}
                 autoComplete="email"
-                focused={focused.email.toString()}
-                onBlur={() => handleFocused("email")}
-                required
+                {...register("email")}
                 className="relative block w-full appearance-none rounded  border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
                 placeholder="Enter email"
               />
-              <span className="error-message ">Invalid email</span>
+              {errors.email && (
+                <span className="text-red-600">{errors.email.message}</span>
+              )}
             </div>
             <div className="flex flex-col space-y-1">
               <label className="text-sm font-medium sr-only" htmlFor="country">
@@ -208,21 +152,19 @@ const Register = () => {
               <select
                 className="relative block w-full rounded mb-2 border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
                 id="country"
-                required
                 name="country"
-                value={country}
-                onChange={onChange}
-                focused={focused.country.toString()}
-                onBlur={() => handleFocused("country")}
+                {...register("country")}
               >
                 <option value="">Select a country</option>
-                {countries?.map((country) => (
+                {countryListAllIsoData?.map(country => (
                   <option key={country.id} value={country.id}>
                     {country.name}
                   </option>
                 ))}
               </select>
-              <span className="error-message ">Country is required</span>
+              {errors.country && (
+                <span className="text-red-600">{errors.country.message}</span>
+              )}
             </div>
             <div className="flex flex-col space-y-3 pb-3">
               <label className="text-sm font-medium sr-only" htmlFor="gender">
@@ -230,13 +172,9 @@ const Register = () => {
               </label>
               <select
                 id="gender"
-                required
+                {...register("gender")}
                 className="relative block w-full rounded mb-2 border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
                 name="gender"
-                value={gender}
-                onChange={onChange}
-                focused={focused.gender.toString()}
-                onBlur={() => handleFocused("gender")}
               >
                 <option value="">Select a gender</option>
                 <option value="male">Male</option>
@@ -244,64 +182,23 @@ const Register = () => {
                 <option value="nonbinary">Non-binary</option>
                 <option value="other">Other</option>
               </select>
-              <span className="error-message ">Gender is required</span>
-            </div>
-            <div className="mb-5">
-              <div className="flex items-center mb-5 border rounded">
-                <input
-                  id="password"
-                  name="password"
-                  type={open ? "text" : "password"}
-                  value={password}
-                  onChange={onChange}
-                  required
-                  className=" w-full  px-3 py-2 border-none text-gray-900 placeholder-gray-500 outline-none sm:text-sm"
-                  placeholder="Password"
-                />
-                {open ? (
-                  <AiOutlineEye
-                    onClick={() => setOpen(false)}
-                    className="mr-2 text-xl"
-                  />
-                ) : (
-                  <AiOutlineEyeInvisible
-                    onClick={() => setOpen(true)}
-                    className="mr-2 text-xl"
-                  />
-                )}
-              </div>
-            </div>
-            <div className="">
-              <div className="flex border items-center rounded">
-                <input
-                  id="re_password"
-                  name="re_password"
-                  type={reOpen ? "text" : "password"}
-                  value={re_password}
-                  onChange={onChange}
-                  required
-                  className="relative block w-full focus:border-none border-none px-3 py-2 text-gray-900 placeholder-gray-500 outline-none sm:text-sm"
-                  placeholder="Confirm password"
-                />
-                <div className=""></div>
-                {reOpen ? (
-                  <AiOutlineEye
-                    onClick={() => setReOpen(false)}
-                    className="mr-2 text-xl"
-                  />
-                ) : (
-                  <AiOutlineEyeInvisible
-                    onClick={() => setReOpen(true)}
-                    className="mr-2 text-xl"
-                  />
-                )}
-              </div>
+              {errors.gender && (
+                <span className="text-red-600">{errors.gender.message}</span>
+              )}
             </div>
           </div>
           <p className="text-xs">
             Your personal data will be used to support your experience
             throughout this website, to manage access to your account, and for
-            other purposes described in our <Link onClick={() =>  dispatch(setCloseRegisterViewState())} className="underline" href="/policy">privacy policy</Link> .
+            other purposes described in our{" "}
+            <Link
+              onClick={() => setSetup(false)}
+              className="underline"
+              href="/policy"
+            >
+              privacy policy
+            </Link>{" "}
+            .
           </p>
 
           <div>
@@ -314,7 +211,6 @@ const Register = () => {
                   color="#black"
                   ariaLabel="three-dots-loading"
                   wrapperStyle={{}}
-                  wrapperClassName=""
                   visible={true}
                 />
               </div>
@@ -326,24 +222,11 @@ const Register = () => {
                 Register
               </button>
             )}
-            {isRegisterError && error.status === 400 && (
-              <div className="bg-green-200 text-green-800 py-2 px-4 rounded-md text-center">
-                An account with the same email already exist
-              </div>
-            )}
           </div>
         </form>
-        <div className="">
-          <p className="text-center">
-            Already have an account?{" "}
-            <span className=" text-indigo-600">
-              <button onClick={handleSigninClick}>Sign in</button>
-            </span>
-          </p>
-        </div>
       </>
-    );
+    )
   }
-};
+}
 
-export default Register;
+export default Register

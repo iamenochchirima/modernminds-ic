@@ -12,6 +12,7 @@ import { BsPerson } from "react-icons/bs"
 import ExploreModal from "./ExploreModal"
 import Image from "next/image"
 import { appContext } from "../context/AppContext"
+import SetupModal from "./SetUpModal"
 
 const Navbar = () => {
 // TODO: CHECK IF THE USER IS IN THE USERS MAPS
@@ -24,6 +25,7 @@ const Navbar = () => {
   const [menuOpen, setMenuOpen] = useState(false)
   const [isSticky, setIsSticky] = useState(false)
   const [newUser, setNewUser] = useState(false)
+  const [setup, setSetup] = useState(false);
 
 const [letterLoading, setLetterLoading] = useState(false)
 const [letterSuccess, setLetterSuccess] = useState(false)
@@ -57,12 +59,18 @@ useEffect(() => {
   }, [])
 
   const fetchUser = async () => {
+   try {
+    console.log(backendActor)
     const res: Response = await backendActor.getUser(session.identity.getPrincipal())
     if (res.ok) {
       setUserInfo(res.ok)
     } else {
+      console.log(res)
       setNewUser(true)
     }
+   } catch (error) {
+    console.log("Error fetching user", error)
+   }
   }
 
 
@@ -400,19 +408,19 @@ useEffect(() => {
           </div>
         </div>
       )}
-      {registerView && (
+      {setup && (
         <div className="fixed z-20 inset-0 overflow-y-scroll bg-black bg-opacity-75">
           <div className=" flex min-h-full items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
             <div className="bg-white w-full  px-6 py-2 max-w-md space-y-8">
               <div className="flex justify-end">
                 <button
                   className="justify-end"
-                  // onClick={() => dispatch(setCloseRegisterViewState())}
+                  onClick={() => setSetup(false)}
                 >
                   <GrClose className="text-2xl mt-2" />
                 </button>
               </div>
-              <Register />
+              <Register {...{setSetup}} />
             </div>
           </div>
         </div>
@@ -434,6 +442,7 @@ useEffect(() => {
           </div>
         </div>
       )}
+      {newUser && <SetupModal {...{setNewUser, setSetup }}/>}
     </div>
   )
 }

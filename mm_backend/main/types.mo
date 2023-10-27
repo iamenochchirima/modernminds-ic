@@ -3,6 +3,7 @@ import Int "mo:base/Int";
 
 module {
 
+// Users
     public type User = {
         id: Principal;
         is_anonymous: Bool;
@@ -25,6 +26,7 @@ module {
         is_active: Bool;
     };
 
+// Articles
     public type Article = {
         id: Text;
         title: Text;
@@ -44,18 +46,7 @@ module {
         created_at: Int;
     };
 
-
-
-    public type Category = {
-        id: Text;
-        name: Text;
-        cover_image: Text;
-        slug: Text;
-        is_active: Bool;
-        created_at: Int;
-    };
-
-    type Section = {
+     type Section = {
         body: Text;
         image: SectionImage;
     };
@@ -68,4 +59,36 @@ module {
         is_center: Bool;
         is_right: Bool;
     };
+
+    public type Category = {
+        id: Text;
+        name: Text;
+        cover_image: Text;
+        slug: Text;
+        is_active: Bool;
+        created_at: Int;
+    };
+
+    // Issues
+    // public type Issue = {
+    //     id: Text;
+    //     name: Text;
+    //     cover_image: Text;
+    //     slug: Text;
+    //     is_active: Bool;
+    //     created_at: Int;
+    // };
+
+     public type Role = {
+        #owner;
+        #admin;
+        #staff;
+        #authorized;
+    };
+
+    public type Permission = {
+        #assign_role;
+        #lowest;
+    };
+
 };

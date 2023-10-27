@@ -2,12 +2,14 @@ import React, { FC, createContext, useContext, useState } from "react"
 import { Actor, HttpAgent, Identity } from "@dfinity/agent"
 
 import { AuthClient } from "@dfinity/auth-client"
-import { idlFactory } from "../declarations/modernminds_backend"
+import { canisterId, idlFactory } from "../declarations/modernminds_backend"
 import { getAuthClient, nfidLogin } from "./utils/auth"
 
-const host = "https://icp0.io"
-// const host = "http://localhost:4943";
-const canisterId = "ctiya-peaaa-aaaaa-qaaja-cai"
+// const host = "https://icp0.io"
+// const canisterId = "ctiya-peaaa-aaaaa-qaaja-cai"
+
+
+const host = "http://localhost:4943";
 
 interface LayoutProps {
   children: React.ReactNode
@@ -69,7 +71,6 @@ export const appContext = () => {
 }
 
 const AppContext: FC<LayoutProps> = ({ children }) => {
-  const [identity, setIdentity] = useState(null)
   const [isAuthenticated, setIsAuthenticated] = useState(false)
   const [isExploreOpen, setExploreOpen] = useState(false)
   const [loginView, setLoginView] = useState(false)
@@ -78,22 +79,22 @@ const AppContext: FC<LayoutProps> = ({ children }) => {
   const [resetPasswordRequest, setResetPasswordRequest] = useState(false)
   const [session, setSession] = React.useState<Session | null>(null);
 
-  // const login = async () => {
-  //   const authClient = await AuthClient.create({
-  //     idleOptions: (typeof indexedDB !== 'undefined') ? {
-  //       idleTimeout: 1000 * 60 * 30,
-  //       disableDefaultIdleCallback: true
-  //     } : null
-  //   })
-  //   await authClient.login({
-  //     identityProvider: "https://identity.ic0.app/#authorize",
-  //     // identityProvider: `http://localhost:4943?canisterId=${canisterId}`,
-  //     onSuccess: () => {
-  //       checkAuth()
-  //     },
-  //     maxTimeToLive: days * hours * nanoseconds
-  //   })
-  // }
+  const login = async () => {
+    const authClient = await AuthClient.create({
+      idleOptions: (typeof indexedDB !== 'undefined') ? {
+        idleTimeout: 1000 * 60 * 30,
+        disableDefaultIdleCallback: true
+      } : null
+    })
+    await authClient.login({
+      // identityProvider: "https://identity.ic0.app/#authorize",
+      identityProvider: `http://localhost:4943?canisterId=${"bkyz2-fmaaa-aaaaa-qaaaq-cai"}`,
+      onSuccess: () => {
+        checkAuth()
+      },
+      maxTimeToLive: days * hours * nanoseconds
+    })
+  }
 
   const assignSession = (authClient: AuthClient) => {
     const identity = authClient.getIdentity();
@@ -105,15 +106,15 @@ const AppContext: FC<LayoutProps> = ({ children }) => {
     });
   };
 
-  const login = async () => {
-    const authClient = await getAuthClient();
-    const isAuthenticated = await authClient.isAuthenticated();
-    if (isAuthenticated) return assignSession(authClient);
+  // const login = async () => {
+  //   const authClient = await getAuthClient();
+  //   const isAuthenticated = await authClient.isAuthenticated();
+  //   if (isAuthenticated) return assignSession(authClient);
 
-    await nfidLogin(authClient!);
+  //   await nfidLogin(authClient!);
 
-    return checkAuth();
-  };
+  //   return checkAuth();
+  // };
 
   const checkAuth = async () => {
     try {
@@ -123,7 +124,7 @@ const AppContext: FC<LayoutProps> = ({ children }) => {
       assignSession(await getAuthClient());
     }
     } catch (error) {
-      
+      console.log("Error on check auth ", error)
     }
   }
 
@@ -131,15 +132,16 @@ const AppContext: FC<LayoutProps> = ({ children }) => {
     const authClient = await AuthClient.create()
     await authClient.logout()
     setIsAuthenticated(false)
-    setIdentity(null)
     setIsAuthenticated(false)
     setIsLogedIn(false)
   }
 
   let agent = new HttpAgent({
     host: host,
-    identity: identity
+    identity: session?.identity
   })
+
+  agent.fetchRootKey()
 
   const backendActor = Actor.createActor(idlFactory, {
     agent,

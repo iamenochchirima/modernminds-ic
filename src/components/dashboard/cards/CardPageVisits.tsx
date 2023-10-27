@@ -1,24 +1,57 @@
-import React from "react";
+import React from "react"
 
-// components
 
 export default function CardPageVisits() {
+  const [tab, setTab] = React.useState("all")
+
   return (
     <>
       <div className="relative flex flex-col min-w-0 break-words bg-white w-full mb-6 shadow-lg rounded">
         <div className="rounded-t mb-0 px-4 py-3 border-0">
           <div className="flex flex-wrap items-center">
-            <div className="relative w-full px-4 max-w-full flex-grow flex-1">
-              <h3 className="font-semibold text-base text-blueGray-700">
-                Page visits
-              </h3>
+            <div className="relative flex gap-4 w-full px-4 max-w-full flex-grow flex-1">
+              <button 
+                onClick={() => setTab("all")}
+                className={`font-semibold text-base text-blueGray-700 px-4 py-1 whitespace-nowrap  ${tab === "all" ? "bg-indigo-400 text-white shadow-lg" : "bg-white  hover:bg-slate-200"}`}>
+                All
+              </button>
+              <button
+                onClick={() => setTab("editors")}
+                className={`font-semibold text-base text-blueGray-700 px-4 py-1 whitespace-nowrap  ${tab === "editors" ? "bg-indigo-400 text-white shadow-lg" : "bg-white  hover:bg-slate-200"}`}>
+                Editors' Note
+              </button>
+              <button
+                onClick={() => setTab("today")}
+                className={`font-semibold text-base text-blueGray-700 px-4 py-1 whitespace-nowrap  ${tab === "today" ? "bg-indigo-400 text-white shadow-lg" : "bg-white  hover:bg-slate-200"}`}>
+                Today's Pick
+              </button>
+              <button
+                onClick={() => setTab("top")}
+                className={`font-semibold text-base text-blueGray-700 px-4 py-1 whitespace-nowrap  ${tab === "top" ? "bg-indigo-400 text-white shadow-lg" : "bg-white  hover:bg-slate-200"}`}>
+                Top Stories
+              </button>
+              <button
+                onClick={() => setTab("special")}
+                className={`font-semibold text-base text-blueGray-700 px-4 py-1 whitespace-nowrap  ${tab === "special" ? "bg-indigo-400 text-white shadow-lg" : "bg-white  hover:bg-slate-200"}`}>
+                Special Articles
+              </button>
+              <button
+                onClick={() => setTab("issue")}
+                className={`font-semibold text-base text-blueGray-700 px-4 py-1 whitespace-nowrap  ${tab === "issue" ? "bg-indigo-400 text-white shadow-lg" : "bg-white  hover:bg-slate-200"}`}>
+                By Issue
+              </button>
+              <button
+                onClick={() => setTab("archived")}
+                className={`font-semibold text-base text-blueGray-700 px-4 py-1 whitespace-nowrap  ${tab === "archived" ? "bg-indigo-400 text-white shadow-lg" : "bg-white  hover:bg-slate-200"}`}>
+                Archived
+              </button>
             </div>
             <div className="relative w-full px-4 max-w-full flex-grow flex-1 text-right">
               <button
                 className="bg-indigo-500 text-white active:bg-indigo-600 text-xs font-bold uppercase px-3 py-1 rounded outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
                 type="button"
               >
-                See all
+                Creat Article
               </button>
             </div>
           </div>
@@ -93,8 +126,7 @@ export default function CardPageVisits() {
                   /argon/tables.html
                 </th>
                 <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
-                  2,050
-                </td>
+                  1 whitespace-nowrap             </td>
                 <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
                   147
                 </td>
@@ -123,5 +155,5 @@ export default function CardPageVisits() {
         </div>
       </div>
     </>
-  );
+  )
 }
