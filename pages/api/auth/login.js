@@ -1,7 +1,9 @@
 import cookie from "cookie";
-import { API_URL } from "../../../frontend/src/config/index";
+// import { API_URL } from "../../../frontend/src/config/index";
 import axios from "axios";
 import jwtDecode from "jwt-decode";
+
+const API_URL = "http://localhost:8000"
 
 export default async (req, res) => {
   if (req.method === "POST") {

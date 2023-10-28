@@ -21,7 +21,7 @@ const Admin = () => {
   const handleMainMailSend = () => {
     setConfirm(false)
     try {
-      sendmainLetter();
+      // sendmainLetter();
     } catch (err) {
       console.error("Failed to sign up for newsletter: ", err);
     }
@@ -79,7 +79,6 @@ const Admin = () => {
                   color="black"
                   ariaLabel="three-dots-loading"
                   wrapperStyle={{}}
-                  wrapperClassName=""
                   visible={true}
                 />
               ) : (

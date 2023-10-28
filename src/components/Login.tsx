@@ -40,13 +40,13 @@ const Login = () => {
   };
 
   const handleCreateAccountClick = () => {
-    dispatch(setCloseLoginViewState());
-    dispatch(setOpenRegisterViewState());
+    // dispatch(setCloseLoginViewState());
+    // dispatch(setOpenRegisterViewState());
   };
 
   const handleForgotPassword = () => {
-    dispatch(setCloseLoginViewState());
-    dispatch(setOpenPasswordReset());
+    // dispatch(setCloseLoginViewState());
+    // dispatch(setOpenPasswordReset());
   };
 
   const handleSubmit = async (e) => {
@@ -57,9 +57,9 @@ const Login = () => {
           .unwrap()
           .then((payload) => {
             setFormData(initialFormData);
-            dispatch(setAuthState());
-            dispatch(setIsLogedIn());
-            dispatch(setCloseLoginViewState());
+            // dispatch(setAuthState());
+            // dispatch(setIsLogedIn());
+            // dispatch(setCloseLoginViewState());
             router.push("/");
           });
       } catch (err) {
@@ -136,7 +136,7 @@ const Login = () => {
             </div>
           </div>
           {error &&
-            error.data.err.message ===
+            // error.data.err.message ===
               "Request failed with status code 401" && (
               <div className="text-red-500 mt-2">
                 Incorrect email or password
@@ -179,7 +179,6 @@ const Login = () => {
                 color="#black"
                 ariaLabel="three-dots-loading"
                 wrapperStyle={{}}
-                wrapperClassName=""
                 visible={true}
               />
             </div>

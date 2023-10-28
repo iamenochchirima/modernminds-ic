@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { ThreeDots } from "react-loader-spinner";
 import {
   useGetSpecialArticlesQuery,
@@ -8,14 +8,20 @@ import Link from "next/link";
 import Image from "next/image";
 
 const TodaysPick = () => {
-  const { data: categories } = useGetCategoriesQuery();
+  // const { data: categories } = useGetCategoriesQuery();
+  // const {
+  //   data: specialData,
+  //   isLoading: specialLoading,
+  //   isSuccess: specialSuccess,
+  //   isError: specialError,
+  // } = useGetSpecialArticlesQuery();
 
-  const {
-    data: specialData,
-    isLoading: specialLoading,
-    isSuccess: specialSuccess,
-    isError: specialError,
-  } = useGetSpecialArticlesQuery();
+  const [categories, setCategories] = useState([]);
+  const [specialData, setSpecialData] = useState([]);
+  const [specialLoading, setSpecialLoading] = useState(false);
+  const [specialSuccess, setSpecialSuccess] = useState(false);
+  const [specialError, setSpecialError] = useState(false);
+
 
   return (
     <div className="">
@@ -99,7 +105,6 @@ const TodaysPick = () => {
               color="#333333"
               ariaLabel="three-dots-loading"
               wrapperStyle={{}}
-              wrapperClassName=""
               visible={true}
             />
           </div>

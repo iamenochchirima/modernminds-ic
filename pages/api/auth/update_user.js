@@ -1,6 +1,8 @@
-import { API_URL } from "../../../config/index";
+// import { API_URL } from "../../../config/index";
 import cookie from "cookie";
 import axios from "axios";
+
+const API_URL = "http://localhost:8000"
 
 export default async (req, res) => {
   if (req.method === "POST") {

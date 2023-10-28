@@ -8,9 +8,11 @@ import Image from "next/image";
 
 const LatestArticles = () => {
   const [page, setPage] = useState(1);
-  const { data, isSuccess, isFetching, hasNextPage } =
-    useGetArticlesQuery(page);
-  const { data: categories } = useGetCategoriesQuery();
+  // const { data, isSuccess, isFetching, hasNextPage } =
+  //   useGetArticlesQuery(page);
+  // const { data: categories } = useGetCategoriesQuery();
+  const [data, setData] = useState(null);
+  const [categories, setCategories] = useState([]);
 
   const handleLoadMore = () => {
     setPage((prevPage) => prevPage + 1);

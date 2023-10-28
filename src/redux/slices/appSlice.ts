@@ -16,14 +16,14 @@ export const appSlice = createSlice({
         state.isExploreOpen = false;
       },
 
-    extraReducers: {
-      [HYDRATE]: (state, action) => {
-        return {
-          ...state,
-          ...action.payload.auth,
-        };
-      },
-    },
+    // extraReducers: {
+    //   [HYDRATE]: (state, action) => {
+    //     return {
+    //       ...state,
+    //       ...action.payload.auth,
+    //     };
+    //   },
+    // },
   },
 });
 

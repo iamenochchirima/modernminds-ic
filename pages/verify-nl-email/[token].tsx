@@ -75,7 +75,6 @@ const Verify = () => {
                   color="#black"
                   ariaLabel="three-dots-loading"
                   wrapperStyle={{}}
-                  wrapperClassName=""
                   visible={true}
                 />
               </div>

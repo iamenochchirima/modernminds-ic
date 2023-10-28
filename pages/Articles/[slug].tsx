@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import Layout from "../../src/components/Layout";
 import { useRouter } from "next/router";
 import {
@@ -11,7 +11,8 @@ import Image from "next/image";
 const Article = () => {
   const router = useRouter();
   const { slug } = router.query;
-  const { data: categories } = useGetCategoriesQuery();
+  // const { data: categories } = useGetCategoriesQuery();
+  const [categories, setCategories] = useState([]);
 
   const [getArticle, { data: article, isSuccess }] =
     useLazyGetFullArticleQuery();
@@ -86,7 +87,6 @@ const Article = () => {
             <div
               className="sm:w-3/4"
               dangerouslySetInnerHTML={{ __html: article?.content }}
-              safe="true"
             />
           </div>
         </div>

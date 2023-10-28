@@ -7,7 +7,8 @@ import { AiOutlineSearch } from "react-icons/ai";
 import Image from "next/image";
 
 const Search = () => {
-  const { data: categories } = useGetCategoriesQuery();
+  // const { data: categories } = useGetCategoriesQuery();
+  const [categories, setCategories] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
   const [getArticles, { data, isLoading, isError, error }] =
     useLazySearchQuery();
@@ -73,9 +74,9 @@ const Search = () => {
             />
           </form>
         </div>
-        {isError && error.status === 404 && (
+        {/* {isError && error.status === 404 && ( */}
           <div className="text-center p-20">Sorry, no results were found</div>
-        )}
+        {/* )} */}
         <div className="flex justify-center items-center">
           <div className="grid grid-cols-2 md:w-3/4 gap-10 mt-10">
             {articles?.map((article) => (

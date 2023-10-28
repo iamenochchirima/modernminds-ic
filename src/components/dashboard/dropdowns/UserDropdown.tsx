@@ -6,12 +6,12 @@ const UserDropdown = ({setTab, tab}) => {
   const [dropdownPopoverShow, setDropdownPopoverShow] = React.useState(false);
   const btnDropdownRef = React.createRef();
   const popoverDropdownRef = React.createRef();
-  const openDropdownPopover = () => {
-    createPopper(btnDropdownRef.current, popoverDropdownRef.current, {
-      placement: "bottom-start",
-    });
-    setDropdownPopoverShow(true);
-  };
+  // const openDropdownPopover = () => {
+  //   createPopper(btnDropdownRef.current, popoverDropdownRef.current, {
+  //     placement: "bottom-start",
+  //   });
+  //   setDropdownPopoverShow(true);
+  // };
   const closeDropdownPopover = () => {
     setDropdownPopoverShow(false);
   };
@@ -20,11 +20,11 @@ const UserDropdown = ({setTab, tab}) => {
       <a
         className="text-blueGray-500 block"
         href="#pablo"
-        ref={btnDropdownRef}
-        onClick={(e) => {
-          e.preventDefault();
-          dropdownPopoverShow ? closeDropdownPopover() : openDropdownPopover();
-        }}
+        // ref={btnDropdownRef}
+        // onClick={(e) => {
+        //   e.preventDefault();
+        //   dropdownPopoverShow ? closeDropdownPopover() : openDropdownPopover();
+        // }}
       >
         <div className="items-center flex">
           <span className="w-12 h-12 text-sm text-white bg-blueGray-200 inline-flex items-center justify-center rounded-full">
@@ -37,7 +37,7 @@ const UserDropdown = ({setTab, tab}) => {
         </div>
       </a>
       <div
-        ref={popoverDropdownRef}
+        // ref={popoverDropdownRef}
         className={
           (dropdownPopoverShow ? "block " : "hidden ") +
           "bg-white text-base z-50 float-left py-2 list-none text-left rounded shadow-lg min-w-48"

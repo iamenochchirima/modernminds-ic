@@ -39,7 +39,7 @@ const ConfirmPasswordReset = () => {
 
   const handleSigninClick = () => {
     router.push("/");
-    dispatch(setOpenLoginViewState());
+    // dispatch(setOpenLoginViewState());
   };
 
   const handleSubmit = async (e) => {
@@ -60,13 +60,13 @@ const ConfirmPasswordReset = () => {
   };
 
   useEffect(() => {
-    if (isError && error.data.error === "Passwords do not match") {
-      toast.error("Passwords do not match", {
-        autoClose: 5000,
-        position: "top-center",
-        hideProgressBar: true,
-      });
-    }
+    // if (isError && error.data.error === "Passwords do not match") {
+    //   toast.error("Passwords do not match", {
+    //     autoClose: 5000,
+    //     position: "top-center",
+    //     hideProgressBar: true,
+    //   });
+    // }
   }, [isError]);
 
   return (
@@ -171,7 +171,6 @@ const ConfirmPasswordReset = () => {
                         color="#black"
                         ariaLabel="three-dots-loading"
                         wrapperStyle={{}}
-                        wrapperClassName=""
                         visible={true}
                       />
                     </div>

@@ -75,13 +75,13 @@ const Unsubscibe = () => {
                 </p>
               </>
             )}
-            {error?.data.detail === "Not found." && (
+            {/* {error?.data.detail === "Not found." && ( */}
               <div className="bg-green-200 text-green-800 py-2 px-4 rounded-md text-center">
                 <p>
                   You are already unsubscribed from the newsletter
                 </p>
               </div>
-            )}
+            {/* )} */}
           </div>
         </div>
       </div>

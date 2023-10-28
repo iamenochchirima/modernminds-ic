@@ -103,7 +103,6 @@ const ContactForm = () => {
                 id="name"
                 className="contact-input border  border-gray-500 outline-none"
                 value={name}
-                focused={focused.name.toString()}
                 onChange={(event) => setName(event.target.value)}
                 onBlur={() => handleFocused("name")}
                 placeholder="Enter your name"
@@ -118,7 +117,6 @@ const ContactForm = () => {
                 id="email"
                 className="contact-input border border-gray-500 outline-none"
                 value={email}
-                focused={focused.email.toString()}
                 onChange={(event) => setEmail(event.target.value)}
                 onBlur={() => handleFocused("email")}
                 placeholder="Enter your Email address"
@@ -132,7 +130,6 @@ const ContactForm = () => {
                 id="message"
                 className="contact-input border  border-gray-500 outline-none"
                 value={message}
-                focused={focused.message.toString()}
                 onChange={(event) => setMessage(event.target.value)}
                 onBlur={() => handleFocused("message")}
                 placeholder="Type your message"
@@ -149,7 +146,6 @@ const ContactForm = () => {
                   color="#black"
                   ariaLabel="three-dots-loading"
                   wrapperStyle={{}}
-                  wrapperClassName=""
                   visible={true}
                 />
               </button>

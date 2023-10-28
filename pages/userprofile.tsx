@@ -31,7 +31,8 @@ const Userprofile = () => {
   const [email, setEmail] = useState("");
   const [isEditing, setIsEditing] = useState(false);
 
-  const { data, isSuccess, isError, error } = useLoadUserQuery();
+  // const { data, isSuccess, isError, error } = useLoadUserQuery();
+  const [data, setData] = useState({});
   const [updateUser, { isSuccess: isUpdateSuccess, isLoading }] =
     useUpdateUserMutation();
   const [
@@ -46,12 +47,12 @@ const Userprofile = () => {
 
   const handleAccountDelete = async () => {
     try {
-      await deleteAcc()
-        .unwrap()
-        .then((payload) => {
-          console.log(payload);
-          setAreYouSure(false);
-        });
+      // await deleteAcc()
+      //   .unwrap()
+      //   .then((payload) => {
+      //     console.log(payload);
+      //     setAreYouSure(false);
+      //   });
     } catch (err) {
       console.error("Failed to delete account: ", err);
     }
@@ -59,7 +60,7 @@ const Userprofile = () => {
   };
 
   const oK = () => {
-    logout();
+    // logout();
     window.location.reload();
   };
 
@@ -78,17 +79,17 @@ const Userprofile = () => {
     },
   ] = useChangeEmailMutation();
 
-  useEffect(() => {
-    if (isSuccess) {
-      setUserInfo(data);
-      setFirstName(data.user.first_name);
-      setLastName(data.user.last_name);
-      setCountry(data.user.country);
-      setGender(data.user.gender);
-      setEmail(data.user.email);
-      setOldEmail(data.user.email);
-    }
-  }, [isSuccess, data]);
+  // useEffect(() => {
+  //   if (isSuccess) {
+  //     setUserInfo(data);
+  //     setFirstName(data.user.first_name);
+  //     setLastName(data.user.last_name);
+  //     setCountry(data.user.country);
+  //     setGender(data.user.gender);
+  //     setEmail(data.user.email);
+  //     setOldEmail(data.user.email);
+  //   }
+  // }, [isSuccess, data]);
 
   useEffect(() => {
     if (isUpdateSuccess) {
@@ -111,7 +112,7 @@ const Userprofile = () => {
   const emailBody = {
     email: email,
     oldEmail,
-    oldEmail,
+    // oldEmail,
   };
 
   const handleEmailChange = (e) => {
@@ -153,7 +154,7 @@ const Userprofile = () => {
             </div>
             <>
               <h2 className="mt-6 text-center text-3xl font-bold tracking-tight text-gray-900">
-                Hello {userInfo.user?.first_name}
+                {/* Hello {userInfo.user?.first_name} */}
               </h2>
               <h3 className="text-center text-xl font-bold">
                 Personal Information
@@ -199,11 +200,11 @@ const Userprofile = () => {
                       onChange={(event) => setCountry(event.target.value)}
                     >
                       <option value="">Select a country</option>
-                      {userInfo?.user?.country_choices.map((country) => (
+                      {/* {userInfo?.user?.country_choices.map((country) => (
                         <option key={country.id} value={country.id}>
                           {country.name}
                         </option>
-                      ))}
+                      ))} */}
                     </select>
                   </div>
                   <div className="flex flex-col space-y-1">
@@ -235,7 +236,6 @@ const Userprofile = () => {
                           color="#black"
                           ariaLabel="three-dots-loading"
                           wrapperStyle={{}}
-                          wrapperClassName=""
                           visible={true}
                         />
                       </div>
@@ -284,7 +284,6 @@ const Userprofile = () => {
                             color="#black"
                             ariaLabel="three-dots-loading"
                             wrapperStyle={{}}
-                            wrapperClassName=""
                             visible={true}
                           />
                         ) : (
@@ -318,7 +317,7 @@ const Userprofile = () => {
                   )}
                 </div>
               </div>
-              {!userInfo.user?.is_subscribed && (
+              {/* {!userInfo.user?.is_subscribed && ( */}
                 <div className="flex justify-between border border-gray-300 rounded my-5 p-5 items-center">
                   <span>Become a member</span>
                   <Link href="/subscribe">
@@ -327,7 +326,7 @@ const Userprofile = () => {
                     </button>
                   </Link>
                 </div>
-              )}
+              {/* )} */}
               <div className="flex justify-center">
                 <button
                   className="bg-black hover:bg-gray-800 text-white font-bold py-2 px-4"

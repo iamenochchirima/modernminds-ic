@@ -1,9 +1,7 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
-import { useLazyGetCategoryArticlesQuery } from "@/redux/api/generalApi";
 import Link from "next/link";
-import Layout from "@/components/Layout";
-import { useGetCategoriesQuery } from "@/redux/api/generalApi";
+import Layout from "../../src/components/Layout";
 import Image from "next/image";
 
 const Category = () => {
@@ -13,8 +11,8 @@ const Category = () => {
   const [page, setPage] = useState(1);
 
   const [articles, setArticles] = useState([]);
-
-  const { data: categories } = useGetCategoriesQuery();
+  const [categories, setCategories] = useState([]);
+  const [data, setData] = useState(null);
 
   const [background, setBackground] = useState(null);
   const [name, setName] = useState("");
@@ -34,11 +32,13 @@ const Category = () => {
     }
   }, [categories, slug]);
 
-  const [getArticles, { data, isSuccess, isFetching, isError }] =
-    useLazyGetCategoryArticlesQuery();
 
   const handleLoadMore = () => {
     setPage((prevPage) => prevPage + 1);
+  };
+
+  const getArticles = async () => {
+    console.log("Getting articles");
   };
 
   useEffect(() => {
@@ -49,9 +49,10 @@ const Category = () => {
 
   useEffect(() => {
     if (slug) {
-      getArticles({ slug, page });
+      getArticles();
     }
   }, [slug, page, getArticles]);
+
 
   return (
     <Layout>

@@ -1,26 +1,32 @@
 import {
   useGetSpecialArticlesQuery,
-  useGetCategoriesQuery,
-} from "../redux/api/generalApi";
-import Link from "next/link";
-import TodaysPick from "./TodaysPick";
-import { ThreeDots } from "react-loader-spinner";
-import Image from "next/image";
+  useGetCategoriesQuery
+} from "../redux/api/generalApi"
+import Link from "next/link"
+import TodaysPick from "./TodaysPick"
+import { ThreeDots } from "react-loader-spinner"
+import Image from "next/image"
+import { useState } from "react"
 
 const SpecialArticles = () => {
-  const { data: categories } = useGetCategoriesQuery();
-  const {
-    data: specialData,
-    isLoading: specialLoading,
-    isSuccess: specialSuccess,
-    isError: specialError,
-  } = useGetSpecialArticlesQuery();
+  // const { data: categories } = useGetCategoriesQuery();
+  // const {
+  //   data: specialData,
+  //   isLoading: specialLoading,
+  //   isSuccess: specialSuccess,
+  //   isError: specialError,
+  // } = useGetSpecialArticlesQuery();
+  const [categories, setCategories] = useState([])
+  const [specialData, setSpecialData] = useState([])
+  const [specialLoading, setSpecialLoading] = useState(false)
+  const [specialSuccess, setSpecialSuccess] = useState(false)
+  const [specialError, setSpecialError] = useState(false)
 
   return (
     <div className="px-3 ss:px-10  mt-24 grid grid-cols-4 gap-5">
       {specialSuccess && (
         <>
-          {specialData.map((article) => {
+          {specialData.map(article => {
             if (article?.top_story) {
               return (
                 <div
@@ -40,7 +46,7 @@ const SpecialArticles = () => {
                           {article.title}
                         </h1>
                       </Link>
-                      {categories?.map((category) => {
+                      {categories?.map(category => {
                         if (category.id === article.category) {
                           return (
                             <Link
@@ -54,9 +60,9 @@ const SpecialArticles = () => {
                                 {category.name}
                               </span>
                             </Link>
-                          );
+                          )
                         }
-                        return null;
+                        return null
                       })}
                     </div>
                     <div className="relative w-full h-[600px]">
@@ -64,7 +70,7 @@ const SpecialArticles = () => {
                         className="absolute"
                         src={article?.cover_image}
                         style={{
-                          objectFit: "cover",
+                          objectFit: "cover"
                         }}
                         fill
                         sizes="100vw"
@@ -73,9 +79,9 @@ const SpecialArticles = () => {
                     </div>
                   </div>
                 </div>
-              );
+              )
             }
-            return null;
+            return null
           })}
         </>
       )}
@@ -94,7 +100,6 @@ const SpecialArticles = () => {
               color="#333333"
               ariaLabel="three-dots-loading"
               wrapperStyle={{}}
-              wrapperClassName=""
               visible={true}
             />
           </div>
@@ -103,7 +108,7 @@ const SpecialArticles = () => {
 
       <div className="col-span-4 sm:col-span-2 md:col-span-1 ">
         <div className="">
-          {specialData?.map((article) => {
+          {specialData?.map(article => {
             if (article?.editor_note) {
               return (
                 <div
@@ -127,7 +132,7 @@ const SpecialArticles = () => {
                       <Image
                         src={article?.cover_image}
                         style={{
-                          objectFit: "cover",
+                          objectFit: "cover"
                         }}
                         fill
                         sizes="(max-width: 768px) 100vw,
@@ -138,15 +143,15 @@ const SpecialArticles = () => {
                     </div>
                   </div>
                 </div>
-              );
+              )
             }
-            return null;
+            return null
           })}
         </div>
         <TodaysPick />
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default SpecialArticles;
+export default SpecialArticles

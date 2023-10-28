@@ -11,8 +11,8 @@ import { GrMenu } from "react-icons/gr"
 import { BsPerson } from "react-icons/bs"
 import ExploreModal from "./ExploreModal"
 import Image from "next/image"
-import { appContext } from "../context/AppContext"
 import SetupModal from "./SetUpModal"
+import { AuthContext } from "../context/AppContext"
 
 const Navbar = () => {
 // TODO: CHECK IF THE USER IS IN THE USERS MAPS
@@ -46,7 +46,7 @@ const [signupData, setSignupData] = useState(null)
     setExploreOpen,
     checkAuth,
     backendActor,
-  } = appContext()
+  } = AuthContext()
 
 useEffect(() => {
   if (session) {

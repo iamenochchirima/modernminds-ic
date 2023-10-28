@@ -2,7 +2,10 @@
   "canisters": {
     "modernminds_backend": {
       "main": "mm_backend/main/main.mo",
-      "type": "motoko"
+      "type": "motoko",
+      "declarations": {
+        "node_compatibility": true
+      }
     },
     "internet_identity": {
       "type": "custom",

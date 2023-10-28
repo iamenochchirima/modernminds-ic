@@ -4,10 +4,10 @@ import Image from "next/image";
 import Link from "next/link";
 import React from "react";
 import { BsFacebook, BsInstagram, BsTwitter } from "react-icons/bs";
-import {
-  setOpenLoginViewState,
-  setOpenRegisterViewState,
-} from "../redux/slices/authSlice";
+// import {
+//   setOpenLoginViewState,
+//   setOpenRegisterViewState,
+// } from "../redux/slices/authSlice";
 
 const Footer = () => {
   const dispatch = useDispatch();
@@ -72,13 +72,15 @@ const Footer = () => {
               <div className="col-span-2 md:col-span-2 text text-dimWhite">
                 <ul className="flex flex-col gap-1">
                   <li>
-                    <button onClick={() => dispatch(setOpenLoginViewState())}>
+                    <button
+                    //  onClick={() => dispatch(setOpenLoginViewState())}
+                     >
                       Signin
                     </button>
                   </li>
                   <li>
                     <button
-                      onClick={() => dispatch(setOpenRegisterViewState())}
+                      // onClick={() => dispatch(setOpenRegisterViewState())}
                     >
                       Register
                     </button>
