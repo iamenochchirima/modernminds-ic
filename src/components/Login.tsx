@@ -1,26 +1,32 @@
 import { useState } from "react";
-import { useLoginMutation } from "../redux/api/authApi";
+// import { useLoginMutation } from "../redux/api/authApi";
 import { useRouter } from "next/router";
-import { useDispatch } from "react-redux";
-import {
-  setAuthState,
-  setCloseLoginViewState,
-  setOpenRegisterViewState,
-  setIsLogedIn,
-  setOpenPasswordReset,
-} from "../redux/slices/authSlice";
+// import { useDispatch } from "react-redux";
+// import {
+//   setAuthState,
+//   setCloseLoginViewState,
+//   setOpenRegisterViewState,
+//   setIsLogedIn,
+//   setOpenPasswordReset,
+// } from "../redux/slices/authSlice";
 import { ThreeDots } from "react-loader-spinner";
 import Image from "next/image";
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 
 const Login = () => {
   const router = useRouter();
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
   const [open, setOpen] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState(false);
+
+  const login = async (body: any) => {
+    console.log("body", body);
+  }
 
   
 
-  const [login, { isLoading, isSuccess, isError, error }] = useLoginMutation();
+  // const [login, { isLoading, isSuccess, isError, error }] = useLoginMutation();
 
   const initialFormData = Object.freeze({
     email: "",
@@ -31,7 +37,7 @@ const Login = () => {
 
   const { email, password } = formData;
 
-  const onChange = (e) =>
+  const onChange = (e: any) =>
     setFormData({ ...formData, [e.target.name]: e.target.value.trim() });
 
   const body = {
@@ -49,19 +55,19 @@ const Login = () => {
     // dispatch(setOpenPasswordReset());
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: any) => {
     e.preventDefault();
     if (body) {
       try {
-        await login(body)
-          .unwrap()
-          .then((payload) => {
-            setFormData(initialFormData);
-            // dispatch(setAuthState());
-            // dispatch(setIsLogedIn());
-            // dispatch(setCloseLoginViewState());
-            router.push("/");
-          });
+        // await login(body)
+        //   .unwrap()
+        //   .then((payload) => {
+        //     setFormData(initialFormData);
+        //     // dispatch(setAuthState());
+        //     // dispatch(setIsLogedIn());
+        //     // dispatch(setCloseLoginViewState());
+        //     router.push("/");
+        //   });
       } catch (err) {
         console.error("Failed to login: ", err);
       }

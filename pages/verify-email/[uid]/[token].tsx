@@ -1,16 +1,26 @@
-import { useEffect } from "react"
+import { useEffect, useState } from "react"
 import { useRouter } from "next/router"
-import { useVerifyEmailMutation } from "../../../src/redux/api/generalApi"
-import { setOpenLoginViewState } from "../../../src/redux/slices/authSlice"
+// import { useVerifyEmailMutation } from "../../../src/redux/api/generalApi"
+// import { setOpenLoginViewState } from "../../../src/redux/slices/authSlice"
 import { Oval, ThreeDots } from "react-loader-spinner"
-import { useDispatch } from "react-redux"
+// import { useDispatch } from "react-redux"
 
 const EmailVeryfication = () => {
-  const dispatch = useDispatch()
+  // const dispatch = useDispatch()
   const router = useRouter()
   const { uid, token } = router.query || {}
-  const [verifyUser, { isLoading, isSuccess, isError, error }] =
-    useVerifyEmailMutation()
+
+  const [isSuccess, setIsSuccess] = useState(false)
+  const [isError, setIsError] = useState(false)
+  const [isLoading, setIsLoading] = useState(false)
+
+  // const [verifyUser, { isLoading, isSuccess, isError, error }] =
+  //   useVerifyEmailMutation()
+
+  const verifyUser = async (body: any) => {
+    console.log("body", body)
+  }
+
 
   const handleLoginButtonClick = () => {
     router.push("/")

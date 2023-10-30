@@ -1,7 +1,12 @@
-import React from "react";
+import React, { FC } from "react";
 import UserDropdown from "./dropdowns/UserDropdown";
 
-export default function Navbar({setTab, tab}) {
+type Props = {
+  setTab: (tab: number) => void;
+  tab: number;
+}
+
+const Navbar: FC<Props> = ({setTab, tab}) => {
   return (
     <>
       {/* Navbar */}
@@ -38,3 +43,5 @@ export default function Navbar({setTab, tab}) {
     </>
   );
 }
+
+export default Navbar;

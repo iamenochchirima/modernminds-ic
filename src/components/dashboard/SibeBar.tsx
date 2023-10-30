@@ -1,11 +1,16 @@
 /*eslint-disable*/
-import React from "react"
+import React, { FC } from "react"
 import Link from "next/link"
 import NotificationDropdown from "./dropdowns/TableDropdown"
 import UserDropdown from "./dropdowns/UserDropdown"
 import { useRouter } from "next/router"
 
-export default function Sidebar({ setTab, tab }) {
+type Props = {
+  setTab: (tab: number) => void;
+  tab: number;
+}
+
+const Sidebar: FC<Props> =({ setTab, tab }) => {
   const [collapseShow, setCollapseShow] = React.useState("hidden")
   const location = useRouter()
 
@@ -331,3 +336,5 @@ export default function Sidebar({ setTab, tab }) {
     </>
   )
 }
+
+export default Sidebar

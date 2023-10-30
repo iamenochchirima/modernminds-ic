@@ -3,7 +3,7 @@ import Layout from "../src/components/Layout";
 import Articles from "../src/components/SpecialArticles";
 import { GrClose } from "react-icons/gr";
 import { useRouter } from "next/router";
-import { useMainNewsletterMutation } from "../src/redux/api/authApi";
+// import { useMainNewsletterMutation } from "../src/redux/api/authApi";
 import Link from "next/link";
 import { ThreeDots } from "react-loader-spinner";
 import { AiOutlineWarning } from "react-icons/ai";
@@ -15,8 +15,13 @@ const Admin = () => {
 
   const [confirm, setConfirm] = useState(false);
 
-  const [sendmainLetter, { isSuccess, isLoading, isError, error }] =
-    useMainNewsletterMutation();
+  const [isSuccess, setIsSuccess] = useState(false);
+  const [isError, setIsError] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  
+
+  // const [sendmainLetter, { isSuccess, isLoading, isError, error }] =
+  //   useMainNewsletterMutation();
 
   const handleMainMailSend = () => {
     setConfirm(false)

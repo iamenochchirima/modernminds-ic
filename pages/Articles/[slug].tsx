@@ -1,27 +1,34 @@
-import { useEffect, useState } from "react";
-import Layout from "../../src/components/Layout";
-import { useRouter } from "next/router";
-import {
-  useLazyGetFullArticleQuery,
-  useGetCategoriesQuery,
-} from "../../src/redux/api/generalApi";
-import Link from "next/link";
-import Image from "next/image";
+import { useEffect, useState } from "react"
+import Layout from "../../src/components/Layout"
+import { useRouter } from "next/router"
+// import {
+//   useLazyGetFullArticleQuery,
+//   useGetCategoriesQuery,
+// } from "../../src/redux/api/generalApi";
+import Link from "next/link"
+import Image from "next/image"
+import { Article as ArticleType, Category } from "../../src/declarations/modernminds_backend/modernminds_backend.did"
+
 
 const Article = () => {
-  const router = useRouter();
-  const { slug } = router.query;
+  const router = useRouter()
+  const { slug } = router.query
   // const { data: categories } = useGetCategoriesQuery();
-  const [categories, setCategories] = useState([]);
+  const [categories, setCategories] = useState<[Category] | null>(null)
+  const [article, setArticle] = useState<ArticleType | null>(null)
 
-  const [getArticle, { data: article, isSuccess }] =
-    useLazyGetFullArticleQuery();
+  // const [getArticle, { data: article, isSuccess }] =
+  //   useLazyGetFullArticleQuery();
+
+  const getArticle = async (slug: any) => {
+    console.log("slug", slug)
+  }
 
   useEffect(() => {
     if (slug) {
-      getArticle(slug);
+      getArticle(slug)
     }
-  }, [slug, getArticle]);
+  }, [slug, getArticle])
 
   return (
     <Layout>
@@ -33,7 +40,7 @@ const Article = () => {
                 <Image
                   src={article?.cover_image}
                   style={{
-                    objectFit: "cover",
+                    objectFit: "cover"
                   }}
                   fill
                   sizes="100vw"
@@ -60,7 +67,7 @@ const Article = () => {
                 <div className="sm:pl-10">
                   <h1 className="text-teal-600">{article?.issue}</h1>
                   <h1 className="mt-5">
-                    {categories?.map((category) => (
+                    {categories?.map(category => (
                       <>
                         {category.id === article?.category && (
                           <Link
@@ -84,15 +91,12 @@ const Article = () => {
             </div>
           </div>
           <div className="flex justify-center">
-            <div
-              className="sm:w-3/4"
-              dangerouslySetInnerHTML={{ __html: article?.content }}
-            />
+            <div className="sm:w-3/4">{article?.content[0].body}</div>
           </div>
         </div>
       </div>
     </Layout>
-  );
-};
+  )
+}
 
-export default Article;
+export default Article

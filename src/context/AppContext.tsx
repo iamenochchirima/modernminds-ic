@@ -4,13 +4,12 @@ import { Actor, HttpAgent, Identity } from "@dfinity/agent"
 import { AuthClient } from "@dfinity/auth-client"
 import { canisterId, idlFactory } from "../declarations/modernminds_backend"
 import { getAuthClient, nfidLogin } from "./utils/auth"
-import { canisterId as identityCanister } from "../declarations/internet_identity";
+import { canisterId as identityCanister } from "../declarations/internet_identity"
 
 // const host = "https://icp0.io"
 // const canisterId = "ctiya-peaaa-aaaaa-qaaja-cai"
 
-
-const host = "http://localhost:4943";
+const host = "http://localhost:4943"
 
 interface LayoutProps {
   children: React.ReactNode
@@ -21,7 +20,7 @@ const hours = BigInt(24)
 const nanoseconds = BigInt(3600000000000)
 
 type Context = {
-  session: Session | null;
+  session: Session | null
   backendActor: any
   isAuthenticated: boolean
   isExploreOpen: boolean
@@ -41,8 +40,8 @@ type Context = {
 }
 
 interface Session {
-  identity: Identity | null;
-  address: string | null;
+  identity: Identity | null
+  address: string | null
 }
 
 const initialContext: Context = {
@@ -78,14 +77,14 @@ const AppContext: FC<LayoutProps> = ({ children }) => {
   const [registerView, setRegisterView] = useState(false)
   const [isLogedIn, setIsLogedIn] = useState(false)
   const [resetPasswordRequest, setResetPasswordRequest] = useState(false)
-  const [session, setSession] = React.useState<Session | null>(null);
+  const [session, setSession] = React.useState<Session | null>(null)
 
   const login = async () => {
     const authClient = await AuthClient.create({
-      idleOptions: (typeof indexedDB !== 'undefined') ? {
+      idleOptions: {
         idleTimeout: 1000 * 60 * 30,
         disableDefaultIdleCallback: true
-      } : null
+      }
     })
     await authClient.login({
       // identityProvider: "https://identity.ic0.app/#authorize",
@@ -98,14 +97,14 @@ const AppContext: FC<LayoutProps> = ({ children }) => {
   }
 
   const assignSession = (authClient: AuthClient) => {
-    const identity = authClient.getIdentity();
-    const address = identity.getPrincipal().toString();
+    const identity = authClient.getIdentity()
+    const address = identity.getPrincipal().toString()
 
     setSession({
       identity,
-      address,
-    });
-  };
+      address
+    })
+  }
 
   // const login = async () => {
   //   const authClient = await getAuthClient();
@@ -119,11 +118,11 @@ const AppContext: FC<LayoutProps> = ({ children }) => {
 
   const checkAuth = async () => {
     try {
-    const authClient = await AuthClient.create()
-    if (await authClient.isAuthenticated()) {
-      setIsAuthenticated(true)
-      assignSession(await getAuthClient());
-    }
+      const authClient = await AuthClient.create()
+      if (await authClient.isAuthenticated()) {
+        setIsAuthenticated(true)
+        assignSession(await getAuthClient())
+      }
     } catch (error) {
       console.log("Error on check auth ", error)
     }
@@ -139,7 +138,7 @@ const AppContext: FC<LayoutProps> = ({ children }) => {
 
   let agent = new HttpAgent({
     host: host,
-    identity: session?.identity
+    identity: session?.identity ? session.identity : undefined
   })
 
   agent.fetchRootKey()

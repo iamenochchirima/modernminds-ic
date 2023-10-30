@@ -1,9 +1,15 @@
-import React, { useEffect, useState } from "react";
+import React, { FC, useEffect, useState } from "react";
 import { AiOutlineCheck } from "react-icons/ai";
 import { ThreeCircles } from "react-loader-spinner";
 import { AuthContext } from "../context/AppContext";
+import { type } from "os";
 
-const SetupModal = ({ setNewUser, setSetup }) => {
+type Props = {
+  setNewUser: (newUser: boolean) => void;
+  setSetup: (setup: boolean) => void;
+};
+
+const SetupModal: FC<Props>  = ({ setNewUser, setSetup }) => {
   const {backendActor} = AuthContext();
   const [selectedOption, setSelectedOption] = useState("");
   const [saving, setSaving] = useState(false);

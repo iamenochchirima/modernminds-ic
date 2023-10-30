@@ -1,23 +1,23 @@
 import React, { useState } from "react";
 import { ThreeDots } from "react-loader-spinner";
-import {
-  useGetSpecialArticlesQuery,
-  useGetCategoriesQuery,
-} from "../redux/api/generalApi";
+// import {
+//   useGetSpecialArticlesQuery,
+//   useGetCategoriesQuery,
+// } from "../redux/api/generalApi";
 import Link from "next/link";
 import Image from "next/image";
+import { Article, Category } from "../declarations/modernminds_backend/modernminds_backend.did";
 
 const TodaysPick = () => {
   // const { data: categories } = useGetCategoriesQuery();
   // const {
-  //   data: specialData,
+  //   data: articles,
   //   isLoading: specialLoading,
   //   isSuccess: specialSuccess,
   //   isError: specialError,
   // } = useGetSpecialArticlesQuery();
-
-  const [categories, setCategories] = useState([]);
-  const [specialData, setSpecialData] = useState([]);
+  const [categories, setCategories] = useState<[Category] | null>(null)
+  const [articles, setArticles] = useState<[Article] | null>(null);;
   const [specialLoading, setSpecialLoading] = useState(false);
   const [specialSuccess, setSpecialSuccess] = useState(false);
   const [specialError, setSpecialError] = useState(false);
@@ -30,8 +30,8 @@ const TodaysPick = () => {
       </div>
       {specialSuccess && (
         <div className="py-1">
-          {specialData?.map((article) => {
-            if (article?.todays_pick) {
+          {articles?.map((article) => {
+            if (article?.is_top_story === true) {
               return (
                 <div key={article.id} className="mt-3">
                   <div className="flex items-center gap-1">

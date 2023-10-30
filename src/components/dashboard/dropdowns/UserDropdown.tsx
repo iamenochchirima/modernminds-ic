@@ -1,7 +1,12 @@
-import React from "react";
+import React, { FC } from "react";
 import { createPopper } from "@popperjs/core";
 
-const UserDropdown = ({setTab, tab}) => {
+type Props = {
+  setTab: (tab: number) => void;
+  tab: number;
+}
+
+const UserDropdown: FC<Props> = ({setTab, tab}) => {
   // dropdown props
   const [dropdownPopoverShow, setDropdownPopoverShow] = React.useState(false);
   const btnDropdownRef = React.createRef();

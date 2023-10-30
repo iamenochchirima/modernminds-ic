@@ -1,20 +1,29 @@
-import { useEffect } from "react";
-import { useDispatch } from "react-redux";
+import { useEffect, useState } from "react";
+// import { useDispatch } from "react-redux";
 import { useRouter } from "next/router";
 import { Oval, ThreeDots } from "react-loader-spinner";
-import { useVerifyNewsletterEmailMutation } from "../../src/redux/api/generalApi";
+// import { useVerifyNewsletterEmailMutation } from "../../src/redux/api/generalApi";
 import { GrClose } from "react-icons/gr";
 import Layout from "../../src/components/Layout";
 import Articles from "../../src/components/SpecialArticles";
 import Link from "next/link";
 
 const Verify = () => {
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
   const router = useRouter();
   const { token } = router.query || {};
 
-  const [verifyEmail, { isSuccess, isLoading, isError, error }] =
-    useVerifyNewsletterEmailMutation();
+  const [isSuccess, setIsSuccess] = useState(false);
+  const [isError, setIsError] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+
+
+  // const [verifyEmail, { isSuccess, isLoading, isError, error }] =
+  //   useVerifyNewsletterEmailMutation();
+
+  const verifyEmail = async (body: any) => {
+    console.log("body", body);
+  };
 
   useEffect(() => {
     try {

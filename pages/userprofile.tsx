@@ -1,14 +1,14 @@
 import { useState, useEffect } from "react";
 import Layout from "../src/components/Layout";
 import { GrClose } from "react-icons/gr";
-import { useLoadUserQuery } from "../src/redux/api/authApi";
+// import { useLoadUserQuery } from "../src/redux/api/authApi";
 import Articles from "../src/components/SpecialArticles";
-import {
-  useUpdateUserMutation,
-  useChangeEmailMutation,
-  useDeleteAccountMutation,
-  useLogoutMutation,
-} from "../src/redux/api/authApi";
+// import {
+//   useUpdateUserMutation,
+//   useChangeEmailMutation,
+//   useDeleteAccountMutation,
+//   useLogoutMutation,
+// } from "../src/redux/api/authApi";
 import { useRouter } from "next/router";
 import { Oval, ThreeDots } from "react-loader-spinner";
 import Link from "next/link";
@@ -17,7 +17,7 @@ import { toast } from "react-toastify";
 const Userprofile = () => {
   const router = useRouter();
 
-  const [logout, { isSuccess: logoutSuccess }] = useLogoutMutation();
+  // const [logout, { isSuccess: logoutSuccess }] = useLogoutMutation();
 
   const [emailEdit, setEmailEdit] = useState(false);
   const [oldEmail, setOldEmail] = useState("");
@@ -31,19 +31,25 @@ const Userprofile = () => {
   const [email, setEmail] = useState("");
   const [isEditing, setIsEditing] = useState(false);
 
+  const [isLoading, setIsLoading] = useState(false);
+  const [emailChangeLoading, setEmailChangeLoading] = useState(false);
+  const [emailChangeSuccess, setEmailChangeSuccess] = useState(false);
+  const [isDeleteError, setIsDeleteError] = useState(false);
+  const [deleteSuccess, setDeleteSuccess] = useState(false);
+
   // const { data, isSuccess, isError, error } = useLoadUserQuery();
   const [data, setData] = useState({});
-  const [updateUser, { isSuccess: isUpdateSuccess, isLoading }] =
-    useUpdateUserMutation();
-  const [
-    deleteAcc,
-    {
-      isSuccess: deleteSuccess,
-      isLoading: deleteLoading,
-      isError: isDeleteError,
-      error: deleteError,
-    },
-  ] = useDeleteAccountMutation();
+  // const [updateUser, { isSuccess: isUpdateSuccess, isLoading }] =
+  //   useUpdateUserMutation();
+  // const [
+  //   deleteAcc,
+  //   {
+  //     isSuccess: deleteSuccess,
+  //     isLoading: deleteLoading,
+  //     isError: isDeleteError,
+  //     error: deleteError,
+  //   },
+  // ] = useDeleteAccountMutation();
 
   const handleAccountDelete = async () => {
     try {
@@ -70,14 +76,14 @@ const Userprofile = () => {
   //   }
   // }, [isError]);
 
-  const [
-    emailChange,
-    {
-      isSuccess: emailChangeSuccess,
-      isError: emailChangeError,
-      isLoading: emailChangeLoading,
-    },
-  ] = useChangeEmailMutation();
+  // const [
+  //   emailChange,
+  //   {
+  //     isSuccess: emailChangeSuccess,
+  //     isError: emailChangeError,
+  //     isLoading: emailChangeLoading,
+  //   },
+  // ] = useChangeEmailMutation();
 
   // useEffect(() => {
   //   if (isSuccess) {
@@ -91,16 +97,16 @@ const Userprofile = () => {
   //   }
   // }, [isSuccess, data]);
 
-  useEffect(() => {
-    if (isUpdateSuccess) {
-      setIsEditing(false);
-      toast.success("Your profile have been updated!", {
-        autoClose: 5000,
-        position: "top-center",
-        hideProgressBar: true,
-      });
-    }
-  }, [isUpdateSuccess]);
+  // useEffect(() => {
+  //   if (isUpdateSuccess) {
+  //     setIsEditing(false);
+  //     toast.success("Your profile have been updated!", {
+  //       autoClose: 5000,
+  //       position: "top-center",
+  //       hideProgressBar: true,
+  //     });
+  //   }
+  // }, [isUpdateSuccess]);
 
   const body = {
     first_name: firstName,
@@ -115,26 +121,26 @@ const Userprofile = () => {
     // oldEmail,
   };
 
-  const handleEmailChange = (e) => {
+  const handleEmailChange = (e: any) => {
     e.preventDefault();
-    if (emailBody) {
-      try {
-        if (oldEmail === email) {
-          setEmailEdit(false);
-        } else {
-          emailChange(emailBody);
-        }
-      } catch (err) {
-        console.error("Failed to change email: ", err);
-      }
-    }
+    // if (emailBody) {
+    //   try {
+    //     if (oldEmail === email) {
+    //       setEmailEdit(false);
+    //     } else {
+    //       emailChange(emailBody);
+    //     }
+    //   } catch (err) {
+    //     console.error("Failed to change email: ", err);
+    //   }
+    // }
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: any) => {
     e.preventDefault();
     if (body) {
       try {
-        await updateUser(body);
+        // await updateUser(body);
       } catch (err) {
         console.error("Failed to update: ", err);
       }

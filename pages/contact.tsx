@@ -16,11 +16,11 @@ const ContactForm = () => {
     message: false,
   });
 
-  const handleFocused = (field) => {
+  const handleFocused = (field: any) => {
     setFocused((prev) => ({ ...prev, [field]: true }));
   };
 
-  const handleSubmit = async (event) => {
+  const handleSubmit = async (event: any) => {
     event.preventDefault();
     setIsLoading(true);
 
@@ -68,7 +68,7 @@ const ContactForm = () => {
         setIsLoading(false);
       }
     } catch (error) {
-      console.log(error.message);
+      // console.log(error.message);
       setIsLoading(false);
       toast.error("Something went wrong, Try again latter", {
         position: "top-center",

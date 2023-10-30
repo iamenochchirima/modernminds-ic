@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useDispatch } from "react-redux";
+// import { useDispatch } from "react-redux";
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
@@ -10,7 +10,7 @@ import { BsFacebook, BsInstagram, BsTwitter } from "react-icons/bs";
 // } from "../redux/slices/authSlice";
 
 const Footer = () => {
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
 
   return (
     <div className="bg-black mt-10 text-white">

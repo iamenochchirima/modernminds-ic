@@ -5,7 +5,13 @@ import Footer from "./Footer";
 import CookieConsent from "react-cookie-consent";
 import Link from "next/link";
 
-const Layout = ({ title, content, children }) => {
+interface LayoutProps {
+  children: React.ReactNode
+  title?: string
+  content?: string
+}
+
+const Layout: React.FC<LayoutProps> = ({ children, title }) => {
   return (
     <div className="flex justify-center items-start">
       <div className=" xl:max-w-[1500px] w-full ">

@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { FC, useState } from "react"
 import { ThreeDots } from "react-loader-spinner"
 import Image from "next/image"
 import Link from "next/link"
@@ -15,7 +15,11 @@ type FormData = {
   gender: string
 }
 
-const Register = ({ setSetup }) => {
+type Props = {
+  setSetup: (setup: boolean) => void
+}
+
+const Register: FC<Props> = ({ setSetup}) => {
   const [isLoading, setIsLoading] = useState(false)
   const [isSuccess, setIsSuccess] = useState(false)
 
@@ -97,7 +101,7 @@ const Register = ({ setSetup }) => {
                   First name
                 </label>
                 <input
-                  name="first_name"
+            
                   type="text"
                   autoComplete="first_name"
                   {...register("first_name")}
@@ -115,7 +119,7 @@ const Register = ({ setSetup }) => {
                   Last name
                 </label>
                 <input
-                  name="last_name"
+                 
                   type="text"
                   autoComplete="last name"
                   {...register("last_name")}
@@ -135,7 +139,7 @@ const Register = ({ setSetup }) => {
               </label>
               <input
                 id="email-address"
-                name="email"
+              
                 autoComplete="email"
                 {...register("email")}
                 className="relative block w-full appearance-none rounded  border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
@@ -152,12 +156,12 @@ const Register = ({ setSetup }) => {
               <select
                 className="relative block w-full rounded mb-2 border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
                 id="country"
-                name="country"
+               
                 {...register("country")}
               >
                 <option value="">Select a country</option>
-                {countryListAllIsoData?.map(country => (
-                  <option key={country.id} value={country.id}>
+                {countryListAllIsoData?.map((country, index) => (
+                  <option key={index} value={country.code}>
                     {country.name}
                   </option>
                 ))}

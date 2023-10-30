@@ -1,6 +1,6 @@
 import "../src/styles/globals.css"
-import { Provider } from "react-redux"
-import { wrapper } from "../src/redux/Store"
+// import { Provider } from "react-redux"
+// import { wrapper } from "../src/redux/Store"
 import { ToastContainer, toast } from "react-toastify"
 import "react-toastify/dist/ReactToastify.css"
 import { useRouter } from "next/router"
@@ -9,24 +9,25 @@ import { useEffect } from "react"
 import * as gtag from "../src/lib/gtag"
 import AppContext from "../src/context/AppContext"
 
-export default function App({ Component, ...rest }) {
+import { AppProps } from 'next/app'
 
-  const { store, props } = wrapper.useWrappedStore(rest)
-  const { pageProps } = props
+export default function App({ Component, pageProps }: AppProps) {
+
+  // const { store, props } = wrapper.useWrappedStore(rest)
   const router = useRouter()
-  useEffect(() => {
-    const handleRouteChange = url => {
-      gtag.pageview(url)
-    }
-    router.events.on("routeChangeComplete", handleRouteChange)
-    return () => {
-      router.events.off("routeChangeComplete", handleRouteChange)
-    }
-  }, [router.events])
+  // useEffect(() => {
+  //   const handleRouteChange = url => {
+  //     gtag.pageview(url)
+  //   }
+  //   router.events.on("routeChangeComplete", handleRouteChange)
+  //   return () => {
+  //     router.events.off("routeChangeComplete", handleRouteChange)
+  //   }
+  // }, [router.events])
 
   return (
     <>
-      <Provider store={store}>
+      {/* <Provider store={store}> */}
         <AppContext>
           <div className="font-graphik">
             <Script
@@ -51,7 +52,7 @@ export default function App({ Component, ...rest }) {
             <Component {...pageProps} />
           </div>
         </AppContext>
-      </Provider>
+      {/* </Provider> */}
     </>
   )
 }

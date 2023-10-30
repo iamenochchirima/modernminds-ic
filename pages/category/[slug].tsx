@@ -3,6 +3,7 @@ import { useRouter } from "next/router";
 import Link from "next/link";
 import Layout from "../../src/components/Layout";
 import Image from "next/image";
+import { Article ,Category as CategoryType } from "../../src/declarations/modernminds_backend/modernminds_backend.did"
 
 const Category = () => {
   const router = useRouter();
@@ -10,15 +11,16 @@ const Category = () => {
 
   const [page, setPage] = useState(1);
 
-  const [articles, setArticles] = useState([]);
-  const [categories, setCategories] = useState([]);
+  const [categories, setCategories] = useState<[CategoryType] | null>(null)
+  const [articles, setArticles] = useState<[Article] | null>(null);
   const [data, setData] = useState(null);
 
-  const [background, setBackground] = useState(null);
+  const [background, setBackground] = useState("");
   const [name, setName] = useState("");
 
+
   useEffect(() => {
-    setArticles([]);
+    // setArticles([]);
   }, [slug]);
 
   useEffect(() => {
@@ -43,7 +45,7 @@ const Category = () => {
 
   useEffect(() => {
     if (data) {
-      setArticles((prevArticles) => [...prevArticles, ...data.results]);
+      // setArticles((prevArticles) => [...prevArticles, ...data.results]);
     }
   }, [data]);
 
@@ -140,11 +142,11 @@ const Category = () => {
         </div>
       </div>
       <div className="text-center mt-5 flex gap-4 justify-center">
-        {data?.next ? (
+        {/* {data?.next ? (
           <button className="border-b-2 border-black" onClick={handleLoadMore}>
             Load More
           </button>
-        ) : null}
+        ) : null} */}
       </div>
     </Layout>
   );

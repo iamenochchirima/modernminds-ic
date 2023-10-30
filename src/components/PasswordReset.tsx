@@ -1,39 +1,46 @@
 import { useState } from "react";
-import { setClosePasswordReset } from "../redux/slices/authSlice";
-import { useResetPasswordMutation } from "../redux/api/generalApi";
-import { useDispatch } from "react-redux";
+// import { setClosePasswordReset } from "../redux/slices/authSlice";
+// import { useResetPasswordMutation } from "../redux/api/generalApi";
+// import { useDispatch } from "react-redux";
 import { Oval, ThreeDots } from "react-loader-spinner";
 import Image from "next/image";
 
 const PasswordReset = () => {
-  const dispatch = useDispatch;
+  // const dispatch = useDispatch;
 
   const initialFormData = Object.freeze({
     email: "",
   });
 
-  const [reset, { isSuccess, isLoading }] = useResetPasswordMutation();
+  const [isLoading, setIsLoading] = useState(false);
+  const [isSuccess, setIsSuccess] = useState(false);
+
+  const reset = async (body: any) => {
+    console.log("body", body);
+  }
+
+  // const [reset, { isSuccess, isLoading }] = useResetPasswordMutation();
 
   const [formData, setFormData] = useState(initialFormData);
 
   const { email } = formData;
 
-  const onChange = (e) =>
+  const onChange = (e : any) =>
     setFormData({ ...formData, [e.target.name]: e.target.value.trim() });
 
   const body = {
     email: formData.email,
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: any) => {
     e.preventDefault();
     if (body) {
       try {
-        await reset(body)
-          .unwrap()
-          .then((payload) => {
-            setFormData(initialFormData);
-          });
+        // await reset(body)
+        //   .unwrap()
+        //   .then((payload) => {
+        //     setFormData(initialFormData);
+        //   });
       } catch (err) {
         console.error("Failed to request password reset: ", err);
       }

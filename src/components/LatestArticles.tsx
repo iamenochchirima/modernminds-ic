@@ -1,18 +1,20 @@
 import { useState } from "react";
-import {
-  useGetArticlesQuery,
-  useGetCategoriesQuery,
-} from "../redux/api/generalApi";
+// import {
+//   useGetArticlesQuery,
+//   useGetCategoriesQuery,
+// } from "../redux/api/generalApi";
 import Link from "next/link";
 import Image from "next/image";
+import { Article, Category } from "../declarations/modernminds_backend/modernminds_backend.did";
 
 const LatestArticles = () => {
   const [page, setPage] = useState(1);
-  // const { data, isSuccess, isFetching, hasNextPage } =
+  // const { articles, isSuccess, isFetching, hasNextPage } =
   //   useGetArticlesQuery(page);
-  // const { data: categories } = useGetCategoriesQuery();
-  const [data, setData] = useState(null);
-  const [categories, setCategories] = useState([]);
+  // const { articles: categories } = useGetCategoriesQuery();
+
+  const [categories, setCategories] = useState<[Category] | null>(null)
+  const [articles, setArticles] = useState<[Article] | null>(null);
 
   const handleLoadMore = () => {
     setPage((prevPage) => prevPage + 1);
@@ -27,7 +29,7 @@ const LatestArticles = () => {
         LATEST STORIES
       </h1>
       <div className="px-3 ss:px-10 grid grid-cols-6 gap-5">
-        {data?.results.map((article) => (
+        {articles?.map((article) => (
           <div
             key={article.id}
             className="col-span-6 ss:col-span-2 md:col-span-2 hover:scale-105 duration-300 fade-in-fwd"
@@ -87,16 +89,16 @@ const LatestArticles = () => {
         ))}
       </div>
       <div className="text-center mt-5 flex gap-4 justify-center">
-        {data?.previous ? (
+        {/* {articles?.previous ? ( */}
           <button className=" border-b-2 border-black" onClick={handlePrevious}>
             Previous
           </button>
-        ) : null}
-        {data?.next ? (
+        {/* ) : null} */}
+        {/* {articles?.next ? ( */}
           <button className="border-b-2 border-black" onClick={handleLoadMore}>
             Load More
           </button>
-        ) : null}
+        {/* ) : null} */}
       </div>
     </>
   );

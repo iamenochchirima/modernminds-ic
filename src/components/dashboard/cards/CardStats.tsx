@@ -1,7 +1,18 @@
-import React from "react";
+import React, { FC } from "react";
 import PropTypes from "prop-types";
 
-export default function CardStats({
+type Props = {
+  statSubtitle: string;
+  statTitle: string;
+  statArrow: string;
+  statPercent: string;
+  statPercentColor: string;
+  statDescripiron: string;
+  statIconName: string;
+  statIconColor: string;
+}
+
+const CardStats: FC<Props> = ({
   statSubtitle,
   statTitle,
   statArrow,
@@ -10,7 +21,7 @@ export default function CardStats({
   statDescripiron,
   statIconName,
   statIconColor,
-}) {
+}) => {
   return (
     <>
       <div className="relative flex flex-col min-w-0 break-words bg-white rounded mb-6 xl:mb-0 shadow-lg">
@@ -67,17 +78,19 @@ CardStats.defaultProps = {
   statIconColor: "bg-red-500",
 };
 
-CardStats.propTypes = {
-  statSubtitle: PropTypes.string,
-  statTitle: PropTypes.string,
-  statArrow: PropTypes.oneOf(["up", "down"]),
-  statPercent: PropTypes.string,
-  // can be any of the text color utilities
-  // from tailwindcss
-  statPercentColor: PropTypes.string,
-  statDescripiron: PropTypes.string,
-  statIconName: PropTypes.string,
-  // can be any of the background color utilities
-  // from tailwindcss
-  statIconColor: PropTypes.string,
-};
+// CardStats.propTypes = {
+//   statSubtitle: PropTypes.string,
+//   statTitle: PropTypes.string,
+//   statArrow: PropTypes.oneOf(["up", "down"]),
+//   statPercent: PropTypes.string,
+//   // can be any of the text color utilities
+//   // from tailwindcss
+//   statPercentColor: PropTypes.string,
+//   statDescripiron: PropTypes.string,
+//   statIconName: PropTypes.string,
+//   // can be any of the background color utilities
+//   // from tailwindcss
+//   statIconColor: PropTypes.string,
+// };
+
+export default CardStats;

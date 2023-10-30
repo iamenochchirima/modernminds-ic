@@ -1,12 +1,13 @@
-import {
-  useGetSpecialArticlesQuery,
-  useGetCategoriesQuery
-} from "../redux/api/generalApi"
+// import {
+//   useGetSpecialArticlesQuery,
+//   useGetCategoriesQuery
+// } from "../redux/api/generalApi"
 import Link from "next/link"
 import TodaysPick from "./TodaysPick"
 import { ThreeDots } from "react-loader-spinner"
 import Image from "next/image"
 import { useState } from "react"
+import { Article, Category } from "../declarations/modernminds_backend/modernminds_backend.did"
 
 const SpecialArticles = () => {
   // const { data: categories } = useGetCategoriesQuery();
@@ -16,18 +17,18 @@ const SpecialArticles = () => {
   //   isSuccess: specialSuccess,
   //   isError: specialError,
   // } = useGetSpecialArticlesQuery();
-  const [categories, setCategories] = useState([])
-  const [specialData, setSpecialData] = useState([])
+  const [categories, setCategories] = useState<[Category] | null>(null)
+  const [articles, setArticles] = useState<[Article] | null>(null);
   const [specialLoading, setSpecialLoading] = useState(false)
   const [specialSuccess, setSpecialSuccess] = useState(false)
-  const [specialError, setSpecialError] = useState(false)
+  const [specialError, setSpecialError] = useState(true)
 
   return (
     <div className="px-3 ss:px-10  mt-24 grid grid-cols-4 gap-5">
       {specialSuccess && (
         <>
-          {specialData.map(article => {
-            if (article?.top_story) {
+          {articles?.map(article => {
+            if (article?.is_top_story === true) {
               return (
                 <div
                   key={article.id}
@@ -108,8 +109,8 @@ const SpecialArticles = () => {
 
       <div className="col-span-4 sm:col-span-2 md:col-span-1 ">
         <div className="">
-          {specialData?.map(article => {
-            if (article?.editor_note) {
+          {articles?.map(article => {
+            if (article?.is_editor_note === true) {
               return (
                 <div
                   key={article.id}

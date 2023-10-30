@@ -1,15 +1,16 @@
 import { AiOutlineClose } from "react-icons/ai";
-import { useGetCategoriesQuery } from "../redux/api/generalApi";
-import { setExploreClose } from "../redux/slices/appSlice";
-import { useDispatch } from "react-redux";
+// import { useGetCategoriesQuery } from "../redux/api/generalApi";
+// import { setExploreClose } from "../redux/slices/appSlice";
+// import { useDispatch } from "react-redux";
 import Link from "next/link";
 import { useState } from "react";
+import { Category } from "../declarations/modernminds_backend/modernminds_backend.did";
 
 const ExploreModal = () => {
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
 
   // const { data: categories } = useGetCategoriesQuery();
-  const [categories, setCategories] = useState([]);
+  const [categories, setCategories] = useState<[Category] | null>(null)
 
   return (
     <div className="fixed left-0 right-0 top-0 min-h-screen overflow-y-scroll bg-white z-10 ">

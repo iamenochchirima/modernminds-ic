@@ -1,21 +1,27 @@
 import { useState, useEffect } from "react";
-import { useLazySearchQuery } from "../src/redux/api/generalApi";
+// import { useLazySearchQuery } from "../src/redux/api/generalApi";
 import Link from "next/link";
 import Layout from "../src/components/Layout";
-import { useGetCategoriesQuery } from "../src/redux/api/generalApi";
+// import { useGetCategoriesQuery } from "../src/redux/api/generalApi";
 import { AiOutlineSearch } from "react-icons/ai";
 import Image from "next/image";
+import { Article, Category } from "../src/declarations/modernminds_backend/modernminds_backend.did";
 
 const Search = () => {
   // const { data: categories } = useGetCategoriesQuery();
-  const [categories, setCategories] = useState([]);
+  const [categories, setCategories] = useState<[Category] | null>(null)
+  const [articles, setArticles] = useState<[Article] | null>(null);
   const [searchQuery, setSearchQuery] = useState("");
-  const [getArticles, { data, isLoading, isError, error }] =
-    useLazySearchQuery();
+  // const [getArticles, { data, isLoading, isError, error }] =
+  //   useLazySearchQuery();
   const [searchData, setSearchData] = useState(null);
+  const [data, setData] = useState(null);
+
+  const getArticles = async (body: any) => {
+    console.log("body", body);
+  }
 
   const [page, setPage] = useState(1);
-  const [articles, setArticles] = useState([]);
 
   useEffect(() => {
     if (data) {
@@ -25,7 +31,7 @@ const Search = () => {
 
   useEffect(() => {
     if (searchData) {
-      setArticles((prevArticles) => [...prevArticles, ...searchData.results]);
+      // setArticles((prevArticles) => [...prevArticles, ...searchData.results]);
     }
   }, [searchData]);
 
@@ -34,7 +40,7 @@ const Search = () => {
   };
 
   useEffect(() => {
-    setArticles([]);
+    // setArticles([]);
     setPage(1);
     setSearchData(null);
     if (searchQuery) {
@@ -51,7 +57,7 @@ const Search = () => {
     }
   }, [page, getArticles]);
 
-  const handleSubmit = (event) => {
+  const handleSubmit = (event: any) => {
     event.preventDefault();
     getArticles({ searchQuery, page });
   };
@@ -135,14 +141,14 @@ const Search = () => {
           </div>
         </div>
         <div className="text-center mt-5 flex gap-4 justify-center">
-          {searchData?.next ? (
+          {/* {searchData?.next ? ( */}
             <button
               className="border-b-2 border-black"
               onClick={handleLoadMore}
             >
               Load More
             </button>
-          ) : null}
+          {/* ) : null} */}
         </div>
       </div>
     </Layout>

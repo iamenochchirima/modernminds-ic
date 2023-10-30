@@ -8,12 +8,27 @@ const EnvPlugin = new webpack.EnvironmentPlugin({
   DFX_NETWORK: "local"
 })
 
-module.exports = {
+/** @type {import('next').NextConfig} */
+
+const withPlugins = require("next-compose-plugins")
+const optimizedImages = require("next-optimized-images")
+
+module.exports = withPlugins([[optimizedImages]], {
+  images: {
+    disableStaticImages: true,
+    unoptimized: true,
+  },
+  devIndicators: {
+    autoPrerender: false
+  },
+  experimental: {
+    esmExternals: true
+  },
   webpack: (config, { buildId, dev, isServer, defaultLoaders, webpack }) => {
     // Plugin
     config.plugins.push(EnvPlugin)
 
     // Important: return the modified config
     return config
-  },
-}
+  }
+})

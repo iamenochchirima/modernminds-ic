@@ -1,6 +1,6 @@
 import { useState, useEffect, use } from "react"
 import Link from "next/link"
-import { useDispatch } from "react-redux"
+// import { useDispatch } from "react-redux"
 import Login from "./Login"
 import Register from "./Register"
 import { GrClose } from "react-icons/gr"
@@ -13,13 +13,14 @@ import ExploreModal from "./ExploreModal"
 import Image from "next/image"
 import SetupModal from "./SetUpModal"
 import { AuthContext } from "../context/AppContext"
+import { User } from "../declarations/modernminds_backend/modernminds_backend.did"
 
 const Navbar = () => {
 // TODO: CHECK IF THE USER IS IN THE USERS MAPS
 // IF NOT, SHOW A MODAL ASKING THEM IF THEY WOULD LIKE TO CONTINUE AS ANONYMOUS USER OR CREATE A PROFILE
 
-  const dispatch = useDispatch()
-  const [userInfo, setUserInfo] = useState(null)
+  // const dispatch = useDispatch()
+  const [userInfo, setUserInfo] = useState<User | null>(null)
   const [letterEmail, setLetterEmail] = useState("")
   const [showNewsletterForm, setShowForm] = useState(false)
   const [menuOpen, setMenuOpen] = useState(false)
@@ -61,15 +62,15 @@ useEffect(() => {
   const fetchUser = async () => {
    try {
     console.log(backendActor)
-    const res: Response = await backendActor.getUser(session.identity.getPrincipal())
+    const res: Response = await backendActor.getUser(session?.identity?.getPrincipal())
     if (res.ok) {
-      setUserInfo(res.ok)
+      // setUserInfo(res.ok)
     } else {
       console.log(res)
       setNewUser(true)
     }
    } catch (error) {
-    console.log("Error fetching user", error)
+    console.log("Error fetchin", error)
    }
   }
 
@@ -92,7 +93,7 @@ useEffect(() => {
   const letterBody = {
     email: letterEmail
   }
-  const handleSubmitNewsletter = async event => {
+  const handleSubmitNewsletter = async (event : any) => {
     event.preventDefault()
     if (letterBody) {
       // try {
@@ -142,7 +143,7 @@ useEffect(() => {
 
   const handleLogout = () => {
     logout()
-    setUserInfo(null)
+    // setUserInfo(null)
   }
 
   return (
@@ -211,12 +212,12 @@ useEffect(() => {
               </div>
               <button className="flex gap-1 items-center group-hover:text-gray-800">
                 <BsPerson />
-                {userInfo?.user.first_name}
+                {userInfo?.user_body?.[0]?.first_name}
                 <AiOutlineDown className="text-sm" />
               </button>
             </li>
           )}
-          {userInfo?.user?.is_staff && (
+          {userInfo?.user_body?.[0]?.is_staff && (
             <li className="hidden sm:block">
               <Link href="/admin">
                 <button>Admin</button>
@@ -290,7 +291,7 @@ useEffect(() => {
                       )}
                     </form>
                     {letterSuccess &&
-                      signupData.success ===
+                      signupData ===
                         "Subscribed, email already verified" && (
                         <div className="bg-green-200 rounded p-2 text-green-800">
                           <p>
@@ -300,7 +301,7 @@ useEffect(() => {
                         </div>
                       )}
                     {letterSuccess &&
-                      signupData.success ===
+                      signupData ===
                         "Subscribed, verification email sent" && (
                         <div className="bg-green-200 rounded p-2 text-green-800">
                           <p>
@@ -311,7 +312,7 @@ useEffect(() => {
                       )}
                     {signupError && (
                       <div className="bg-green-200 rounded p-2 text-green-800">
-                        {signupError.data.error ===
+                        {signupError ===
                           "Email already subscribed to newsletter" && (
                           <p>
                             Your email is already subcribed to the newsletter
@@ -361,7 +362,7 @@ useEffect(() => {
 
                 <div className="menu-container h-screen ">
                   <ul className="md:text-center flex flex-col gap-10 pl-20 p-5 text-2xl">
-                    {userInfo?.user?.is_staff && (
+                    {userInfo?.user_body?.[0]?.is_staff && (
                       <li className="hover:scale-110 duration-300">
                         <Link href="/admin">
                           <button>Admin</button>

@@ -1,6 +1,6 @@
 import {useState } from "react";
 import { useRouter } from "next/router";
-import { useNewsletterUnsubscribeMutation } from "../../src/redux/api/generalApi";
+// import { useNewsletterUnsubscribeMutation } from "../../src/redux/api/generalApi";
 import Image from "next/image";
 import { toast } from "react-toastify";
 
@@ -10,8 +10,16 @@ const Unsubscibe = () => {
 
   const { token } = router.query || {};
 
-  const [unsubscribe, { isSuccess, isLoading, isError, error }] =
-    useNewsletterUnsubscribeMutation();
+  const [isError, setIsError] = useState(false);
+  const [error, setError] = useState(null);
+  const [isSuccess, setIsSuccess] = useState(false);
+
+  // const [unsubscribe, { isSuccess, isLoading, isError, error }] =
+  //   useNewsletterUnsubscribeMutation();
+
+  const unsubscribe = async (token: any) => {
+    console.log("token", token);
+  }
 
     if(isError) {
       console.log(error)
@@ -20,21 +28,21 @@ const Unsubscibe = () => {
   const handleUnsubscribe = async () => {
     if (token) {
       try {
-        await unsubscribe(token)
-          .unwrap()
-          .then((payload) => {
-            console.log(payload);
-            setDefaultDiv(false);
-          });
+        // await unsubscribe(token)
+        //   .unwrap()
+        //   .then((payload) => {
+        //     console.log(payload);
+        //     setDefaultDiv(false);
+        //   });
       } catch (err) {
         console.log(err)
-        if (err.status === 400) {
-          toast.error('Invalid token', {
-            position: "top-center",
-            autoClose: 7000,
-            hideProgressBar: true,
-            });
-        }
+        // if (err.status === 400) {
+        //   toast.error('Invalid token', {
+        //     position: "top-center",
+        //     autoClose: 7000,
+        //     hideProgressBar: true,
+        //     });
+        // }
       }
     }
   };

@@ -18,12 +18,12 @@ export default function CardPageVisits() {
               <button
                 onClick={() => setTab("editors")}
                 className={`font-semibold text-base text-blueGray-700 px-4 py-1 whitespace-nowrap  ${tab === "editors" ? "bg-indigo-400 text-white shadow-lg" : "bg-white  hover:bg-slate-200"}`}>
-                Editors' Note
+                Editors Note
               </button>
               <button
                 onClick={() => setTab("today")}
                 className={`font-semibold text-base text-blueGray-700 px-4 py-1 whitespace-nowrap  ${tab === "today" ? "bg-indigo-400 text-white shadow-lg" : "bg-white  hover:bg-slate-200"}`}>
-                Today's Pick
+                Todays Pick
               </button>
               <button
                 onClick={() => setTab("top")}

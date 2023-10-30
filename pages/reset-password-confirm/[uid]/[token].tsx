@@ -1,22 +1,28 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
-import { useConfirmResetMutation } from "../../../src/redux/api/generalApi";
-import { setOpenLoginViewState } from "../../../src/redux/slices/authSlice";
-import { useDispatch } from "react-redux";
+// import { useConfirmResetMutation } from "../../../src/redux/api/generalApi";
+// import { setOpenLoginViewState } from "../../../src/redux/slices/authSlice";
+// import { useDispatch } from "react-redux";
 import { Oval, ThreeDots } from "react-loader-spinner";
 import Image from "next/image";
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 import { toast } from "react-toastify";
 
 const ConfirmPasswordReset = () => {
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
   const router = useRouter();
   const { uid, token } = router.query || {};
   const [open, setOpen] = useState(false);
   const [reOpen, setReOpen] = useState(false);
+  const [isSuccess, setIsSuccess] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
-  const [finishReset, { isSuccess, isLoading, isError, error }] =
-    useConfirmResetMutation();
+  // const [finishReset, { isSuccess, isLoading, isError, error }] =
+  //   useConfirmResetMutation();
+
+  const finishReset = async (body: any) => {
+    console.log("body", body);
+  }
 
   const initialFormData = Object.freeze({
     password: "",
@@ -27,7 +33,7 @@ const ConfirmPasswordReset = () => {
 
   const { password, re_password } = formData;
 
-  const onChange = (e) =>
+  const onChange = (e: any) =>
     setFormData({ ...formData, [e.target.name]: e.target.value.trim() });
 
   const body = {
@@ -42,32 +48,32 @@ const ConfirmPasswordReset = () => {
     // dispatch(setOpenLoginViewState());
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: any) => {
     e.preventDefault();
     console.log(body);
     if (body) {
       try {
-        await finishReset(body)
-          .unwrap()
-          .then((payload) => {
-            setFormData(initialFormData);
-            console.log("Reset password confirm successfull", payload);
-          });
+        // await finishReset(body)
+        //   .unwrap()
+        //   .then((payload) => {
+        //     setFormData(initialFormData);
+        //     console.log("Reset password confirm successfull", payload);
+        //   });
       } catch (err) {
         console.error("Failed to reset password: ", err);
       }
     }
   };
 
-  useEffect(() => {
-    // if (isError && error.data.error === "Passwords do not match") {
-    //   toast.error("Passwords do not match", {
-    //     autoClose: 5000,
-    //     position: "top-center",
-    //     hideProgressBar: true,
-    //   });
-    // }
-  }, [isError]);
+  // useEffect(() => {
+  //   // if (isError && error.data.error === "Passwords do not match") {
+  //   //   toast.error("Passwords do not match", {
+  //   //     autoClose: 5000,
+  //   //     position: "top-center",
+  //   //     hideProgressBar: true,
+  //   //   });
+  //   // }
+  // }, [isError]);
 
   return (
     <div className="fixed z-10 inset-0 overflow-y-auto bg-gray-500 bg-opacity-75">
