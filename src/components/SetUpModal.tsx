@@ -2,15 +2,16 @@ import React, { FC, useEffect, useState } from "react";
 import { AiOutlineCheck } from "react-icons/ai";
 import { ThreeCircles } from "react-loader-spinner";
 import { AuthContext } from "../context/AppContext";
-import { type } from "os";
+import { toast } from "react-toastify";
 
 type Props = {
   setNewUser: (newUser: boolean) => void;
   setSetup: (setup: boolean) => void;
+  setHasRegistered: (hasRegistered: boolean) => void;
 };
 
-const SetupModal: FC<Props>  = ({ setNewUser, setSetup }) => {
-  const {backendActor} = AuthContext();
+const SetupModal: FC<Props>  = ({ setNewUser, setSetup, setHasRegistered }) => {
+  const {backendActor, session} = AuthContext();
   const [selectedOption, setSelectedOption] = useState("");
   const [saving, setSaving] = useState(false);
 
@@ -20,11 +21,24 @@ const SetupModal: FC<Props>  = ({ setNewUser, setSetup }) => {
         setSetup(true);
         setNewUser(false);
         setSaving(false);
-    } else {
+    } else if (selectedOption === "anonymous") {
       try {
-        const result = await backendActor?.setAnonymous();
-        console.log(result);
+        const user = {
+          id: session.identity? session.identity.getPrincipal() : null,
+          is_anonymous: true,
+          user_body: [],
+          created_at: BigInt(Date.now()),
+        }
+        console.log(user)
+        const result = await backendActor.createUser(user);
+        toast.success("Profile Create successfully!", {
+          autoClose: 5000,
+          position: "top-center",
+          hideProgressBar: true,
+        });
+        setSetup(false);
         setSaving(false);
+        window.location.reload();
       } catch (err) {
         console.error("Failed to set anonymous: ", err);
       }

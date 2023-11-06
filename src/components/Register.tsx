@@ -17,9 +17,10 @@ type FormData = {
 
 type Props = {
   setSetup: (setup: boolean) => void
+  setHasRegistered: (hasRegistered: boolean) => void
 }
 
-const Register: FC<Props> = ({ setSetup}) => {
+const Register: FC<Props> = ({ setSetup, setHasRegistered }) => {
   const [isLoading, setIsLoading] = useState(false)
   const [isSuccess, setIsSuccess] = useState(false)
 
@@ -40,6 +41,12 @@ const Register: FC<Props> = ({ setSetup}) => {
       .min(3, { message: "Country name must be at least 3 characters long" })
       .max(40, {
         message: "Country name must be less than 40 characters long"
+      }),
+    gender: z
+      .string()
+      .min(1, { message: "Gender be at least 1 character long" })
+      .max(40, {
+        message: "Gender must be less than 40 characters long"
       })
   })
 
@@ -51,6 +58,7 @@ const Register: FC<Props> = ({ setSetup}) => {
 
   const saveProfile = async (data: FormData) => {
     console.log(data)
+    setIsLoading(true)
   }
 
   if (isSuccess) {
@@ -101,7 +109,6 @@ const Register: FC<Props> = ({ setSetup}) => {
                   First name
                 </label>
                 <input
-            
                   type="text"
                   autoComplete="first_name"
                   {...register("first_name")}
@@ -119,7 +126,6 @@ const Register: FC<Props> = ({ setSetup}) => {
                   Last name
                 </label>
                 <input
-                 
                   type="text"
                   autoComplete="last name"
                   {...register("last_name")}
@@ -139,7 +145,6 @@ const Register: FC<Props> = ({ setSetup}) => {
               </label>
               <input
                 id="email-address"
-              
                 autoComplete="email"
                 {...register("email")}
                 className="relative block w-full appearance-none rounded  border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
@@ -156,12 +161,11 @@ const Register: FC<Props> = ({ setSetup}) => {
               <select
                 className="relative block w-full rounded mb-2 border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
                 id="country"
-               
                 {...register("country")}
               >
                 <option value="">Select a country</option>
                 {countryListAllIsoData?.map((country, index) => (
-                  <option key={index} value={country.code}>
+                  <option key={index} value={country.name}>
                     {country.name}
                   </option>
                 ))}

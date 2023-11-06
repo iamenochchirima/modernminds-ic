@@ -1,7 +1,5 @@
 import { useState, useEffect, use } from "react"
 import Link from "next/link"
-// import { useDispatch } from "react-redux"
-import Login from "./Login"
 import Register from "./Register"
 import { GrClose } from "react-icons/gr"
 import PasswordReset from "./PasswordReset"
@@ -16,10 +14,7 @@ import { AuthContext } from "../context/AppContext"
 import { User } from "../declarations/modernminds_backend/modernminds_backend.did"
 
 const Navbar = () => {
-// TODO: CHECK IF THE USER IS IN THE USERS MAPS
-// IF NOT, SHOW A MODAL ASKING THEM IF THEY WOULD LIKE TO CONTINUE AS ANONYMOUS USER OR CREATE A PROFILE
 
-  // const dispatch = useDispatch()
   const [userInfo, setUserInfo] = useState<User | null>(null)
   const [letterEmail, setLetterEmail] = useState("")
   const [showNewsletterForm, setShowForm] = useState(false)
@@ -27,6 +22,7 @@ const Navbar = () => {
   const [isSticky, setIsSticky] = useState(false)
   const [newUser, setNewUser] = useState(false)
   const [setup, setSetup] = useState(false);
+  const [hasRegistered, setHasRegistered] = useState(false)
 
 const [letterLoading, setLetterLoading] = useState(false)
 const [letterSuccess, setLetterSuccess] = useState(false)
@@ -38,9 +34,6 @@ const [signupData, setSignupData] = useState(null)
     login,
     logout,
     isAuthenticated,
-    loginView,
-    registerView,
-    isLogedIn,
     session,
     resetPasswordRequest,
     isExploreOpen,
@@ -111,7 +104,7 @@ useEffect(() => {
 
   useEffect(() => {
     const handleScroll = () => {
-      setIsSticky(window.pageYOffset > 0)
+      setIsSticky(window.scrollY > 0)
     }
 
     window.addEventListener("scroll", handleScroll)
@@ -144,6 +137,16 @@ useEffect(() => {
   const handleLogout = () => {
     logout()
     // setUserInfo(null)
+  }
+
+  const handleCloseRegister = () => {
+   if (hasRegistered) {
+    setSetup(false)
+    setHasRegistered(false)
+   } else {
+    setSetup(false)
+    setNewUser(true)
+   }
   }
 
   return (
@@ -392,23 +395,6 @@ useEffect(() => {
           </li>
         </ul>
       </div>
-      {loginView && (
-        <div className="fixed z-20 inset-0 overflow-y-auto bg-black bg-opacity-75">
-          <div className=" flex min-h-full items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
-            <div className="bg-white w-full px-6 py-2 max-w-md space-y-8">
-              <div className="flex justify-end">
-                <button
-                  className="justify-end"
-                  // onClick={() => setCloseLoginViewState }
-                >
-                  <GrClose className="text-2xl mt-2" />
-                </button>
-              </div>
-              <Login />
-            </div>
-          </div>
-        </div>
-      )}
       {setup && (
         <div className="fixed z-20 inset-0 overflow-y-scroll bg-black bg-opacity-75">
           <div className=" flex min-h-full items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
@@ -416,12 +402,12 @@ useEffect(() => {
               <div className="flex justify-end">
                 <button
                   className="justify-end"
-                  onClick={() => setSetup(false)}
+                  onClick={handleCloseRegister}
                 >
                   <GrClose className="text-2xl mt-2" />
                 </button>
               </div>
-              <Register {...{setSetup}} />
+              <Register {...{setSetup, setHasRegistered}} />
             </div>
           </div>
         </div>
@@ -443,7 +429,7 @@ useEffect(() => {
           </div>
         </div>
       )}
-      {newUser && <SetupModal {...{setNewUser, setSetup }}/>}
+      {newUser && <SetupModal {...{setNewUser, setSetup, setHasRegistered }}/>}
     </div>
   )
 }
