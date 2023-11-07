@@ -16,7 +16,7 @@ const optimizedImages = require("next-optimized-images")
 module.exports = withPlugins([[optimizedImages]], {
   images: {
     disableStaticImages: true,
-    unoptimized: false,
+    unoptimized: true,
   },
   devIndicators: {
     autoPrerender: false

@@ -13,14 +13,31 @@ type FormData = {
   status: string
 }
 
+type SectionImage = {
+  caption: string
+  credit: string
+  is_left: boolean
+  is_center: boolean
+  is_right: boolean
+}
+
 type Props = {
   setOpenCreateModal: (value: boolean) => void
 }
 
 const CreateArticle: FC<Props> = ({ setOpenCreateModal }) => {
-  const [coverfile, setCoverFile] = useState<File | null>(null)
   const [isLoading, setIsLoading] = useState(false)
   const [categories, setCategories] = useState([])
+
+  const [coverfile, setCoverFile] = useState<File | null>(null)
+  const [contentBody1, setContentBody1] = useState("")
+  const [contentBody1Image, setContentBody1Image] = useState<File | null>(null)
+  const [contentBody2, setContentBody2] = useState("")
+  const [contentBody2Image, setContentBody2Image] = useState<File | null>(null)
+  const [contentBody3, setContentBody3] = useState("")
+  const [contentBody3Image, setContentBody3Image] = useState<File | null>(null)
+  const [contentBody4, setContentBody4] = useState("")
+  const [contentBody4Image, setContentBody4Image] = useState<File | null>(null)
 
   const schema = z.object({
     title: z
@@ -100,7 +117,7 @@ const CreateArticle: FC<Props> = ({ setOpenCreateModal }) => {
               onSubmit={handleSubmit(saveArticle)}
             >
               <input type="hidden" name="remember" value="true" />
-              <div className="-space-y-px rounded-md shadow-sm">
+              <div className=" rounded-md shadow-sm">
                 <div className="mb-3">
                   <label htmlFor="title" className="">
                     Title
@@ -115,6 +132,27 @@ const CreateArticle: FC<Props> = ({ setOpenCreateModal }) => {
                   {errors.title && (
                     <span className="text-red-600">{errors.title.message}</span>
                   )}
+                </div>
+                <div className="mb-3">
+                  <label htmlFor="cover-image" className="">
+                    Cover Image
+                  </label>
+                  <input
+                    type="file"
+                    autoComplete="cover-image"
+                    onChange={e => setCoverFile(e.target.files[0])}
+                    className="relative block w-full appearance-none  rounded border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
+                    placeholder="Cover Image"
+                  />
+                </div>
+                <div className="mb-[100px]">
+                  <label htmlFor="" className="">
+                    Content
+                  </label>
+                  <textarea
+                    className="relative block w-full appearance-none  rounded border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
+                    placeholder="Content"
+                  ></textarea>
                 </div>
                 <div className="mb-3">
                   <label htmlFor="title" className="">
