@@ -1,9 +1,10 @@
 import { FC, useState } from "react"
 import { ThreeDots } from "react-loader-spinner"
 import { z } from "zod"
-import { useForm } from "react-hook-form"
+import { set, useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { GrClose } from "react-icons/gr"
+import { IoMdAdd } from "react-icons/io"
 
 type FormData = {
   title: string
@@ -14,6 +15,7 @@ type FormData = {
 }
 
 type SectionImage = {
+  image: File
   caption: string
   credit: string
   is_left: boolean
@@ -28,16 +30,24 @@ type Props = {
 const CreateArticle: FC<Props> = ({ setOpenCreateModal }) => {
   const [isLoading, setIsLoading] = useState(false)
   const [categories, setCategories] = useState([])
+  const [addMore, setAddMore] = useState(false)
 
   const [coverfile, setCoverFile] = useState<File | null>(null)
   const [contentBody1, setContentBody1] = useState("")
-  const [contentBody1Image, setContentBody1Image] = useState<File | null>(null)
+  const [contentBody1Image, setContentBody1Image] =
+    useState<SectionImage | null>(null)
   const [contentBody2, setContentBody2] = useState("")
-  const [contentBody2Image, setContentBody2Image] = useState<File | null>(null)
+  const [contentBody2Image, setContentBody2Image] =
+    useState<SectionImage | null>(null)
   const [contentBody3, setContentBody3] = useState("")
-  const [contentBody3Image, setContentBody3Image] = useState<File | null>(null)
+  const [contentBody3Image, setContentBody3Image] =
+    useState<SectionImage | null>(null)
   const [contentBody4, setContentBody4] = useState("")
-  const [contentBody4Image, setContentBody4Image] = useState<File | null>(null)
+  const [contentBody4Image, setContentBody4Image] =
+    useState<SectionImage | null>(null)
+  const [contentBody5, setContentBody5] = useState("")
+  const [contentBody5Image, setContentBody5Image] =
+    useState<SectionImage | null>(null)
 
   const schema = z.object({
     title: z
@@ -92,6 +102,8 @@ const CreateArticle: FC<Props> = ({ setOpenCreateModal }) => {
       .replace(/^-+|-+$/g, "")
   }
 
+  console.log(contentBody1Image)
+
   return (
     <>
       <div className="fixed z-20 inset-0 overflow-y-scroll bg-black bg-opacity-75">
@@ -144,15 +156,6 @@ const CreateArticle: FC<Props> = ({ setOpenCreateModal }) => {
                     className="relative block w-full appearance-none  rounded border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
                     placeholder="Cover Image"
                   />
-                </div>
-                <div className="mb-[100px]">
-                  <label htmlFor="" className="">
-                    Content
-                  </label>
-                  <textarea
-                    className="relative block w-full appearance-none  rounded border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
-                    placeholder="Content"
-                  ></textarea>
                 </div>
                 <div className="mb-3">
                   <label htmlFor="title" className="">
@@ -208,6 +211,767 @@ const CreateArticle: FC<Props> = ({ setOpenCreateModal }) => {
                     </span>
                   )}
                 </div>
+              </div>
+              <div className="mb-4 ">
+                <label htmlFor="" className="font-bold">
+                  Content
+                </label>
+                <div className="border m-2 p-5 rounded-lg bg-gray-100">
+                  <label
+                    htmlFor=""
+                    className="text-gray-700 font-sm mb-3 font-bold"
+                  >
+                    Section 1 Content
+                  </label>
+                  <textarea
+                    onChange={e => setContentBody1(e.target.value)}
+                    className="relative block w-full appearance-none  rounded border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
+                    placeholder="Type the article content here"
+                  ></textarea>
+                  <div className="">
+                    <label
+                      htmlFor=""
+                      className="text-gray-700 font-sm mb-3 mt-3"
+                    >
+                      Section 1 Image
+                    </label>
+                    <input
+                      type="file"
+                      autoComplete="section-1-image"
+                      onChange={e =>
+                        setContentBody1Image({
+                          ...contentBody1Image,
+                          image: e.target.files[0]
+                        })
+                      }
+                      className="relative block w-full appearance-none  rounded border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
+                      placeholder="Cover Image"
+                    />
+                    <div className="mb-3">
+                      <label
+                        htmlFor="title"
+                        className="text-gray-700 font-sm mb-3 mt-3"
+                      >
+                        Caption
+                      </label>
+                      <input
+                        type="text"
+                        autoComplete="caption"
+                        onChange={e =>
+                          setContentBody1Image({
+                            ...contentBody1Image,
+                            caption: e.target.value
+                          })
+                        }
+                        className="relative block w-full appearance-none  rounded border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
+                        placeholder="Caption"
+                      />
+                    </div>
+                    <div className="mb-3">
+                      <label
+                        htmlFor="title"
+                        className="text-gray-700 font-sm mb-3 mt-3"
+                      >
+                        Credit
+                      </label>
+                      <input
+                        type="text"
+                        autoComplete="credit"
+                        onChange={e =>
+                          setContentBody1Image({
+                            ...contentBody1Image,
+                            credit: e.target.value
+                          })
+                        }
+                        className="relative block w-full appearance-none  rounded border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
+                        placeholder="Credit"
+                      />
+                    </div>
+                    <label
+                      htmlFor="position"
+                      className="text-gray-700 font-sm mb-3 mt-3"
+                    >
+                      Image Position
+                    </label>
+                    <div className="flex items-center gap-10">
+                      <div className="flex items-center">
+                        <input
+                          type="radio"
+                          name="position"
+                          value="left"
+                          onChange={e =>
+                            setContentBody1Image({
+                              ...contentBody1Image,
+                              is_left: e.target.checked,
+                              is_center: false,
+                              is_right: false
+                            })
+                          }
+                          className="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded"
+                        />
+                        <label
+                          htmlFor="position-left"
+                          className="ml-2 block text-sm text-gray-900"
+                        >
+                          Left
+                        </label>
+                      </div>
+                      <div className="flex items-center">
+                        <input
+                          type="radio"
+                          name="position"
+                          value="center"
+                          onChange={e =>
+                            setContentBody1Image({
+                              ...contentBody1Image,
+                              is_center: e.target.checked,
+                              is_left: false,
+                              is_right: false
+                            })
+                          }
+                          className="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded"
+                        />
+                        <label
+                          htmlFor="position-center"
+                          className="ml-2 block text-sm text-gray-900"
+                        >
+                          Center
+                        </label>
+                      </div>
+                      <div className="flex items-center">
+                        <input
+                          type="radio"
+                          name="position"
+                          value="right"
+                          onChange={e =>
+                            setContentBody1Image({
+                              ...contentBody1Image,
+                              is_right: e.target.checked,
+                              is_left: false,
+                              is_center: false
+                            })
+                          }
+                          className="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded"
+                        />
+                        <label
+                          htmlFor="position-right"
+                          className="ml-2 block text-sm text-gray-900"
+                        >
+                          Right
+                        </label>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <button
+                  onClick={e => {
+                    e.preventDefault()
+                    setAddMore(true)
+                  }}
+                  className="flex items-center m-2 gap-1 bg-gray-200 border rounded-lg mt-5 p-2 hover:bg-white"
+                >
+                  <IoMdAdd size={21} />
+                  <span>Add more sections</span>
+                </button>
+                {addMore && (
+                  <>
+                    {/* Section 2 */}
+                    <div className="border m-2 p-5 rounded-lg bg-gray-100">
+                      <label
+                        htmlFor=""
+                        className="text-gray-700 font-sm mb-3 font-bold"
+                      >
+                        Section 2 Content (Optional)
+                      </label>
+                      <textarea
+                        onChange={e => setContentBody2(e.target.value)}
+                        className="relative block w-full appearance-none  rounded border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
+                        placeholder="Type the article content here"
+                      ></textarea>
+                      <div className="">
+                        <label
+                          htmlFor=""
+                          className="text-gray-700 font-sm mb-3 mt-3"
+                        >
+                          Section 2 Image
+                        </label>
+                        <input
+                          type="file"
+                          autoComplete="section-2-image"
+                          onChange={e =>
+                            setContentBody2Image({
+                              ...contentBody2Image,
+                              image: e.target.files[0]
+                            })
+                          }
+                          className="relative block w-full appearance-none  rounded border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
+                          placeholder="Cover Image"
+                        />
+                        <div className="mb-3">
+                          <label
+                            htmlFor="title"
+                            className="text-gray-700 font-sm mb-3 mt-3"
+                          >
+                            Caption
+                          </label>
+                          <input
+                            type="text"
+                            autoComplete="caption"
+                            onChange={e =>
+                              setContentBody2Image({
+                                ...contentBody2Image,
+                                caption: e.target.value
+                              })
+                            }
+                            className="relative block w-full appearance-none  rounded border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
+                            placeholder="Caption"
+                          />
+                        </div>
+                        <div className="mb-3">
+                          <label
+                            htmlFor="title"
+                            className="text-gray-700 font-sm mb-3 mt-3"
+                          >
+                            Credit
+                          </label>
+                          <input
+                            type="text"
+                            autoComplete="credit"
+                            onChange={e =>
+                              setContentBody2Image({
+                                ...contentBody2Image,
+                                credit: e.target.value
+                              })
+                            }
+                            className="relative block w-full appearance-none  rounded border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
+                            placeholder="Credit"
+                          />
+                        </div>
+                        <label
+                          htmlFor="position"
+                          className="text-gray-700 font-sm mb-3 mt-3"
+                        >
+                          Image Position
+                        </label>
+                        <div className="flex items-center gap-10">
+                          <div className="flex items-center">
+                            <input
+                              type="radio"
+                              name="position"
+                              value="left"
+                              onChange={e =>
+                                setContentBody2Image({
+                                  ...contentBody2Image,
+                                  is_left: e.target.checked,
+                                  is_center: false,
+                                  is_right: false
+                                })
+                              }
+                              className="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded"
+                            />
+                            <label
+                              htmlFor="position-left"
+                              className="ml-2 block text-sm text-gray-900"
+                            >
+                              Left
+                            </label>
+                          </div>
+                          <div className="flex items-center">
+                            <input
+                              type="radio"
+                              name="position"
+                              value="center"
+                              onChange={e =>
+                                setContentBody2Image({
+                                  ...contentBody1Image,
+                                  is_center: e.target.checked,
+                                  is_left: false,
+                                  is_right: false
+                                })
+                              }
+                              className="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded"
+                            />
+                            <label
+                              htmlFor="position-center"
+                              className="ml-2 block text-sm text-gray-900"
+                            >
+                              Center
+                            </label>
+                          </div>
+                          <div className="flex items-center">
+                            <input
+                              type="radio"
+                              name="position"
+                              value="right"
+                              onChange={e =>
+                                setContentBody2Image({
+                                  ...contentBody1Image,
+                                  is_right: e.target.checked,
+                                  is_left: false,
+                                  is_center: false
+                                })
+                              }
+                              className="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded"
+                            />
+                            <label
+                              htmlFor="position-right"
+                              className="ml-2 block text-sm text-gray-900"
+                            >
+                              Right
+                            </label>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    {/* Section 3 */}
+                    <div className="border m-2 p-5 rounded-lg bg-gray-100">
+                      <label
+                        htmlFor=""
+                        className="text-gray-700 font-sm mb-3 font-bold"
+                      >
+                        Section 3 Content (Optional)
+                      </label>
+                      <textarea
+                        onChange={e => setContentBody3(e.target.value)}
+                        className="relative block w-full appearance-none  rounded border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
+                        placeholder="Type the article content here"
+                      ></textarea>
+                      <div className="">
+                        <label
+                          htmlFor=""
+                          className="text-gray-700 font-sm mb-3 mt-3"
+                        >
+                          Section 3 Image
+                        </label>
+                        <input
+                          type="file"
+                          autoComplete="section-2-image"
+                          onChange={e =>
+                            setContentBody3Image({
+                              ...contentBody3Image,
+                              image: e.target.files[0]
+                            })
+                          }
+                          className="relative block w-full appearance-none  rounded border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
+                          placeholder="Cover Image"
+                        />
+                        <div className="mb-3">
+                          <label
+                            htmlFor="title"
+                            className="text-gray-700 font-sm mb-3 mt-3"
+                          >
+                            Caption
+                          </label>
+                          <input
+                            type="text"
+                            autoComplete="caption"
+                            onChange={e =>
+                              setContentBody3Image({
+                                ...contentBody3Image,
+                                caption: e.target.value
+                              })
+                            }
+                            className="relative block w-full appearance-none  rounded border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
+                            placeholder="Caption"
+                          />
+                        </div>
+                        <div className="mb-3">
+                          <label
+                            htmlFor="title"
+                            className="text-gray-700 font-sm mb-3 mt-3"
+                          >
+                            Credit
+                          </label>
+                          <input
+                            type="text"
+                            autoComplete="credit"
+                            onChange={e =>
+                              setContentBody3Image({
+                                ...contentBody3Image,
+                                credit: e.target.value
+                              })
+                            }
+                            className="relative block w-full appearance-none  rounded border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
+                            placeholder="Credit"
+                          />
+                        </div>
+                        <label
+                          htmlFor="position"
+                          className="text-gray-700 font-sm mb-3 mt-3"
+                        >
+                          Image Position
+                        </label>
+                        <div className="flex items-center gap-10">
+                          <div className="flex items-center">
+                            <input
+                              type="radio"
+                              name="position"
+                              value="left"
+                              onChange={e =>
+                                setContentBody3Image({
+                                  ...contentBody3Image,
+                                  is_left: e.target.checked,
+                                  is_center: false,
+                                  is_right: false
+                                })
+                              }
+                              className="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded"
+                            />
+                            <label
+                              htmlFor="position-left"
+                              className="ml-2 block text-sm text-gray-900"
+                            >
+                              Left
+                            </label>
+                          </div>
+                          <div className="flex items-center">
+                            <input
+                              type="radio"
+                              name="position"
+                              value="center"
+                              onChange={e =>
+                                setContentBody3Image({
+                                  ...contentBody3Image,
+                                  is_center: e.target.checked,
+                                  is_left: false,
+                                  is_right: false
+                                })
+                              }
+                              className="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded"
+                            />
+                            <label
+                              htmlFor="position-center"
+                              className="ml-2 block text-sm text-gray-900"
+                            >
+                              Center
+                            </label>
+                          </div>
+                          <div className="flex items-center">
+                            <input
+                              type="radio"
+                              name="position"
+                              value="right"
+                              onChange={e =>
+                                setContentBody3Image({
+                                  ...contentBody3Image,
+                                  is_right: e.target.checked,
+                                  is_left: false,
+                                  is_center: false
+                                })
+                              }
+                              className="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded"
+                            />
+                            <label
+                              htmlFor="position-right"
+                              className="ml-2 block text-sm text-gray-900"
+                            >
+                              Right
+                            </label>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Section 4 */}
+                    <div className="border m-2 p-5 rounded-lg bg-gray-100">
+                      <label
+                        htmlFor=""
+                        className="text-gray-700 font-sm mb-3 font-bold"
+                      >
+                        Section 4 Content (Optional)
+                      </label>
+                      <textarea
+                        onChange={e => setContentBody4(e.target.value)}
+                        className="relative block w-full appearance-none  rounded border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
+                        placeholder="Type the article content here"
+                      ></textarea>
+                      <div className="">
+                        <label
+                          htmlFor=""
+                          className="text-gray-700 font-sm mb-3 mt-3"
+                        >
+                          Section 4 Image
+                        </label>
+                        <input
+                          type="file"
+                          autoComplete="section-4-image"
+                          onChange={e =>
+                            setContentBody4Image({
+                              ...contentBody4Image,
+                              image: e.target.files[0]
+                            })
+                          }
+                          className="relative block w-full appearance-none  rounded border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
+                          placeholder="Cover Image"
+                        />
+                        <div className="mb-3">
+                          <label
+                            htmlFor="title"
+                            className="text-gray-700 font-sm mb-3 mt-3"
+                          >
+                            Caption
+                          </label>
+                          <input
+                            type="text"
+                            autoComplete="caption"
+                            onChange={e =>
+                              setContentBody4Image({
+                                ...contentBody4Image,
+                                caption: e.target.value
+                              })
+                            }
+                            className="relative block w-full appearance-none  rounded border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
+                            placeholder="Caption"
+                          />
+                        </div>
+                        <div className="mb-3">
+                          <label
+                            htmlFor="title"
+                            className="text-gray-700 font-sm mb-3 mt-3"
+                          >
+                            Credit
+                          </label>
+                          <input
+                            type="text"
+                            autoComplete="credit"
+                            onChange={e =>
+                              setContentBody4Image({
+                                ...contentBody4Image,
+                                credit: e.target.value
+                              })
+                            }
+                            className="relative block w-full appearance-none  rounded border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
+                            placeholder="Credit"
+                          />
+                        </div>
+                        <label
+                          htmlFor="position"
+                          className="text-gray-700 font-sm mb-3 mt-3"
+                        >
+                          Image Position
+                        </label>
+                        <div className="flex items-center gap-10">
+                          <div className="flex items-center">
+                            <input
+                              type="radio"
+                              name="position"
+                              value="left"
+                              onChange={e =>
+                                setContentBody4Image({
+                                  ...contentBody4Image,
+                                  is_left: e.target.checked,
+                                  is_center: false,
+                                  is_right: false
+                                })
+                              }
+                              className="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded"
+                            />
+                            <label
+                              htmlFor="position-left"
+                              className="ml-2 block text-sm text-gray-900"
+                            >
+                              Left
+                            </label>
+                          </div>
+                          <div className="flex items-center">
+                            <input
+                              type="radio"
+                              name="position"
+                              value="center"
+                              onChange={e =>
+                                setContentBody4Image({
+                                  ...contentBody4Image,
+                                  is_center: e.target.checked,
+                                  is_left: false,
+                                  is_right: false
+                                })
+                              }
+                              className="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded"
+                            />
+                            <label
+                              htmlFor="position-center"
+                              className="ml-2 block text-sm text-gray-900"
+                            >
+                              Center
+                            </label>
+                          </div>
+                          <div className="flex items-center">
+                            <input
+                              type="radio"
+                              name="position"
+                              value="right"
+                              onChange={e =>
+                                setContentBody4Image({
+                                  ...contentBody4Image,
+                                  is_right: e.target.checked,
+                                  is_left: false,
+                                  is_center: false
+                                })
+                              }
+                              className="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded"
+                            />
+                            <label
+                              htmlFor="position-right"
+                              className="ml-2 block text-sm text-gray-900"
+                            >
+                              Right
+                            </label>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Section 5 */}
+
+                    <div className="border m-2 p-5 rounded-lg bg-gray-100">
+                      <label
+                        htmlFor=""
+                        className="text-gray-700 font-sm mb-3 font-bold"
+                      >
+                        Section 5 Content (Optional)
+                      </label>
+                      <textarea
+                        onChange={e => setContentBody5(e.target.value)}
+                        className="relative block w-full appearance-none  rounded border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
+                        placeholder="Type the article content here"
+                      ></textarea>
+                      <div className="">
+                        <label
+                          htmlFor=""
+                          className="text-gray-700 font-sm mb-3 mt-3"
+                        >
+                          Section 5 Image
+                        </label>
+                        <input
+                          type="file"
+                          autoComplete="section-5-image"
+                          onChange={e =>
+                            setContentBody5Image({
+                              ...contentBody5Image,
+                              image: e.target.files[0]
+                            })
+                          }
+                          className="relative block w-full appearance-none  rounded border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
+                          placeholder="Cover Image"
+                        />
+                        <div className="mb-3">
+                          <label
+                            htmlFor="title"
+                            className="text-gray-700 font-sm mb-3 mt-3"
+                          >
+                            Caption
+                          </label>
+                          <input
+                            type="text"
+                            autoComplete="caption"
+                            onChange={e =>
+                              setContentBody5Image({
+                                ...contentBody5Image,
+                                caption: e.target.value
+                              })
+                            }
+                            className="relative block w-full appearance-none  rounded border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
+                            placeholder="Caption"
+                          />
+                        </div>
+                        <div className="mb-3">
+                          <label
+                            htmlFor="title"
+                            className="text-gray-700 font-sm mb-3 mt-3"
+                          >
+                            Credit
+                          </label>
+                          <input
+                            type="text"
+                            autoComplete="credit"
+                            onChange={e =>
+                              setContentBody5Image({
+                                ...contentBody5Image,
+                                credit: e.target.value
+                              })
+                            }
+                            className="relative block w-full appearance-none  rounded border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
+                            placeholder="Credit"
+                          />
+                        </div>
+                        <label
+                          htmlFor="position"
+                          className="text-gray-700 font-sm mb-3 mt-3"
+                        >
+                          Image Position
+                        </label>
+                        <div className="flex items-center gap-10">
+                          <div className="flex items-center">
+                            <input
+                              type="radio"
+                              name="position"
+                              value="left"
+                              onChange={e =>
+                                setContentBody5Image({
+                                  ...contentBody5Image,
+                                  is_left: e.target.checked,
+                                  is_center: false,
+                                  is_right: false
+                                })
+                              }
+                              className="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded"
+                            />
+                            <label
+                              htmlFor="position-left"
+                              className="ml-2 block text-sm text-gray-900"
+                            >
+                              Left
+                            </label>
+                          </div>
+                          <div className="flex items-center">
+                            <input
+                              type="radio"
+                              name="position"
+                              value="center"
+                              onChange={e =>
+                                setContentBody5Image({
+                                  ...contentBody5Image,
+                                  is_center: e.target.checked,
+                                  is_left: false,
+                                  is_right: false
+                                })
+                              }
+                              className="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded"
+                            />
+                            <label
+                              htmlFor="position-center"
+                              className="ml-2 block text-sm text-gray-900"
+                            >
+                              Center
+                            </label>
+                          </div>
+                          <div className="flex items-center">
+                            <input
+                              type="radio"
+                              name="position"
+                              value="right"
+                              onChange={e =>
+                                setContentBody5Image({
+                                  ...contentBody5Image,
+                                  is_right: e.target.checked,
+                                  is_left: false,
+                                  is_center: false
+                                })
+                              }
+                              className="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded"
+                            />
+                            <label
+                              htmlFor="position-right"
+                              className="ml-2 block text-sm text-gray-900"
+                            >
+                              Right
+                            </label>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </>
+                )}
               </div>
 
               <div>
