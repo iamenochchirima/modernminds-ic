@@ -10,16 +10,17 @@
 # dfx temporary files
 .dfx/
 
-target/
-
+# generated files
 src/declarations/
+
+# rust
+target/
 
 # frontend code
 node_modules/
-out/
+dist/
 
-# Next.js
-.next/
-
+# environment variables
+.env
 
 .mops
