@@ -8,7 +8,7 @@ import { ThreeDots } from "react-loader-spinner";
 import {
   Article,
   Category,
-} from "../../../declarations/modernminds_backend/modernminds_backend.did";
+} from "../declarations/modernminds_backend/modernminds_backend.did";
 import { Link } from "react-router-dom";
 
 const TodaysPick = () => {

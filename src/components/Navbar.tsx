@@ -9,7 +9,7 @@ import { BsPerson } from "react-icons/bs"
 import ExploreModal from "./ExploreModal"
 import SetupModal from "./SetUpModal"
 import { AuthContext } from "../context/AppContext"
-import { User } from "../../../declarations/modernminds_backend/modernminds_backend.did"
+import { User } from "../declarations/modernminds_backend/modernminds_backend.did"
 import { initActors } from "../config/storage-config/functions"
 import { Link } from "react-router-dom"
 

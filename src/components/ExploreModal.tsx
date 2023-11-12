@@ -3,7 +3,7 @@ import { AiOutlineClose } from "react-icons/ai";
 // import { setExploreClose } from "../redux/slices/appSlice";
 // import { useDispatch } from "react-redux";
 import { useState } from "react";
-import { Category } from "../../../declarations/modernminds_backend/modernminds_backend.did";
+import { Category } from "../declarations/modernminds_backend/modernminds_backend.did";
 import { Link } from "react-router-dom";
 
 const ExploreModal = () => {

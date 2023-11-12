@@ -5,7 +5,7 @@
 import TodaysPick from "./TodaysPick"
 import { ThreeDots } from "react-loader-spinner"
 import { useState } from "react"
-import { Article, Category } from "../../../declarations/modernminds_backend/modernminds_backend.did"
+import { Article, Category } from "../declarations/modernminds_backend/modernminds_backend.did"
 import { Link } from "react-router-dom"
 
 const SpecialArticles = () => {

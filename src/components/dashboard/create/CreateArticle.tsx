@@ -8,7 +8,7 @@ import { IoMdAdd } from "react-icons/io";
 import {
   Article,
   Section,
-} from "../../../../../declarations/modernminds_backend/modernminds_backend.did";
+} from "../../../declarations/modernminds_backend/modernminds_backend.did";
 import { v4 as uuid } from "uuid";
 import ArticlePreview from "./ArticlePreview";
 
@@ -244,7 +244,7 @@ const CreateArticle: FC<Props> = ({ setOpenCreateModal }) => {
       }
     });
   };
-
+  
   const slugify = (title: string) => {
     return title
       .toLowerCase()

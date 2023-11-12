@@ -1,7 +1,6 @@
 import React from "react";
 import Navbar from "./Navbar";
 import Footer from "./Footer";
-import CookieConsent from "react-cookie-consent";
 import { Link, Outlet } from "react-router-dom";
 
 const Layout = () => {
@@ -9,7 +8,7 @@ const Layout = () => {
     <div className="flex justify-center items-start">
       <div className=" xl:max-w-[1500px] w-full ">
         <Navbar />
-        <CookieConsent
+        {/* <CookieConsent
           style={{
             textAlign: "start",
             fontSize: "0.875rem",
@@ -30,7 +29,7 @@ const Layout = () => {
           <Link to="/terms" className="underline">
             terms of use
           </Link>
-        </CookieConsent>
+        </CookieConsent> */}
         <Outlet />
         <Footer />
       </div>

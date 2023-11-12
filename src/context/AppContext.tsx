@@ -2,9 +2,9 @@ import React, { FC, createContext, useContext, useState } from "react"
 import { Actor, HttpAgent, Identity } from "@dfinity/agent"
 
 import { AuthClient } from "@dfinity/auth-client"
-import { canisterId, idlFactory } from "../../../declarations/modernminds_backend"
+import { canisterId, idlFactory } from "../declarations/modernminds_backend"
 import { getAuthClient, nfidLogin } from "./utils/auth"
-import { canisterId as identityCanister } from "../../../declarations/internet_identity"
+import { canisterId as identityCanister } from "../declarations/internet_identity"
 
 // const host = "https://icp0.io"
 // const canisterId = "ctiya-peaaa-aaaaa-qaaja-cai"

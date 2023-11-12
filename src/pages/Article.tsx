@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import {
   Article as ArticleType,
   Category,
-} from "../../../declarations/modernminds_backend/modernminds_backend.did";
+} from "../declarations/modernminds_backend/modernminds_backend.did";
 import { Link, useParams } from "react-router-dom";
 
 const Article = () => {

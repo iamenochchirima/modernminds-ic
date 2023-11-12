@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import {
   Article as ArticleType,
   Category,
-} from "../../../../../declarations/modernminds_backend/modernminds_backend.did";
+} from "../../../declarations/modernminds_backend/modernminds_backend.did";
 import { Link, useParams } from "react-router-dom";
 import { GrClose } from "react-icons/gr";
 
@@ -90,11 +90,11 @@ const ArticlePreview = ({ previewArticle, setPreview }) => {
                   <div
                     key={index}
                     className={`sm:w-3/4 
-        ${content.img_url ? "flex" : ""} 
-        ${content.img_is_center ? "flex-col items-center" : ""} 
-        ${content.img_is_left ? "flex-row-reverse" : ""} 
-        ${content.img_is_right ? "flex-row" : ""}
-      `}
+                    ${content.img_url ? "flex" : ""} 
+                    ${content.img_is_center ? "flex-col items-center" : ""} 
+                    ${content.img_is_left ? "flex-row-reverse" : ""} 
+                    ${content.img_is_right ? "flex-row" : ""}
+                  `}
                   >
                     <div
                       className={`${
@@ -105,16 +105,21 @@ const ArticlePreview = ({ previewArticle, setPreview }) => {
                     </div>
                     {content.img_url && (
                       <div
-                        className={`${
-                          content.img_is_center ? "w-full" : "w-1/2"
-                        }`}
+                        className={`
+                        ${content.img_is_center ? "w-full" : "w-1/2"}
+                        ${content.img_is_left ? "overflow-hidden relative" : ""}
+                        ${content.img_is_right ? "overflow-hidden relative0" : ""}
+                        `}
                       >
                         <img
                           src={content.img_url}
                           alt=""
-                          className={`${
-                            content.img_is_center ? "w-full" : "w-full"
-                          }`}
+                          className={`
+                          ${content.img_is_center ? "w-full" : "w-full"}
+                          ${content.img_is_left ? "float-right" : ""}
+                          ${content.img_is_right ? "float-left" : ""}
+                          
+                          `}
                         />
                       </div>
                     )}
