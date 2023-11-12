@@ -27,7 +27,6 @@ const App = () => {
         <Route path="/admin" element={<Admin />} />
         <Route path="/contact" element={<ContactForm />} />
         <Route path="/manage-subscription" element={<ManageSubs />} />
-        <Route path="/dashboard" element={<Dashboard />} />
         <Route path="article/:slug" element={<Article />} />
         <Route path="/policy" element={<Policy />} />
         <Route path="/search" element={<Search />} />
@@ -39,6 +38,7 @@ const App = () => {
         <Route path="verify-email/:uuid/:token" element={<EmailVerification/>} />
         <Route path="verify-newsletter-email/:uuid/:token" element={<VerifyNewsletterEmail/>} />
       </Route>
+      <Route path="/dashboard" element={<Dashboard />} />
     </Routes>
   </BrowserRouter>
   )

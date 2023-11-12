@@ -10,7 +10,7 @@ const Dashboard = () => {
   const [tab, setTab] = useState(0)
 
   return (
-    <>
+    <div className="font-graphik">
       <Sidebar {...{setTab, tab}} />
       <div className="relative md:ml-64 bg-blueGray-100">
         <Navbar {...{setTab, tab}} />
@@ -24,7 +24,7 @@ const Dashboard = () => {
           {/* <FooterAdmin /> */}
         </div>
       </div>
-    </>
+    </div>
   )
 }
 
